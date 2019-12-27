@@ -5,7 +5,7 @@
   <view class="HotName">今日推荐
     <text></text>
   </view>
-  <view class="HotMark">唯爱与美食不可辜负</view>
+  <view class="HotMark">唯爱与滑雪不可辜负</view>
 
   <view class="HotSwiper" style="margin-top:{{windowHeight/45}}px">
     <swiper circular="true" autoplay="true" interval="6000" duration="500" previous-margin="{{windowWidth/3.8}}rpx" next-margin="{{windowWidth/3.8}}rpx">
