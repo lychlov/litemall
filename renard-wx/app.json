@@ -42,18 +42,18 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "images/tabbar/like-f.png",
-        "selectedIconPath": "images/tabbar/like-o.png"
+        "iconPath": "images/tabbar/video-unselected.png",
+        "selectedIconPath": "images/tabbar/video-selected.png"
       },
       {
         "pagePath": "pages/catalog/catalog",
-        "iconPath": "images/tabbar/menu-f.png",
-        "selectedIconPath": "images/tabbar/menu-o.png"
+        "iconPath": "images/tabbar/exercise-unselected.png",
+        "selectedIconPath": "images/tabbar/exercise-selected.png"
       },
       {
         "pagePath": "pages/cart/cart",
-        "iconPath": "images/tabbar/cart-f.png",
-        "selectedIconPath": "images/tabbar/cart-o.png"
+        "iconPath": "images/tabbar/discuss-unselected.png",
+        "selectedIconPath": "images/tabbar/discuss-selected.png"
       },
       {
         "pagePath": "pages/ucenter/index/index",
