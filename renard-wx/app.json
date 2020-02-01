@@ -69,5 +69,6 @@
     "downloadFile": 10000
   },
   "debug": true,
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList": ["wxc4f812079fc9ff0d"]
 }

@@ -1,49 +1,79 @@
+<!--index.wxml-->
 <view class="container">
-  <!-- 首页顶部通知消息 -->
-  <van-notice-bar scrollable="true" text="目前上架的商品均可直接下单购买，欢迎大家购买支持我的工作！" />
+<!-- 首页顶部通知消息 -->
+<van-notice-bar scrollable="true" text="XX老师正在直播，请学员前往观看。。。XX老师正在直播，请学员前往观看。。。XX老师正在直播，请学员前往观看。。。" />
 
-  <view class="HotName">今日推荐
-    <text></text>
+<view class="search">
+    <navigator url="/pages/search/search" class="input">
+      <van-icon name="search"/>
+      <text class="txt">课程搜索</text>
+    </navigator>
   </view>
-  <view class="HotMark">唯爱与滑雪不可辜负</view>
-
-  <view class="HotSwiper" style="margin-top:{{windowHeight/45}}px">
-    <swiper circular="true" autoplay="true" interval="6000" duration="500" previous-margin="{{windowWidth/3.8}}rpx" next-margin="{{windowWidth/3.8}}rpx">
-      <block wx:for-items="{{hotGoods}}" wx:key="{{id}}">
-        <navigator url="/pages/goods/goods?id={{item.id}}">
-          <swiper-item>
-            <view class="swiper-box">
-              <form bindsubmit="saveFormId" report-submit='true' class='form_class'>
-                <button formType="submit" class='form_button'>
-                  <image src="{{item.picUrl}}" mode="aspectFill" data-id="{{item.id}}" />
-                </button>
-              </form>
-              <view class="swiper-box-info">
-                <view class="name">{{item.name}}</view>
-                <view class="price">
-                  <view class="counterPrice" wx:if="{{item.counterPrice > item.retailPrice}}">原价：￥{{item.counterPrice}}</view>
-                  <view class="retailPrice">现价：￥{{item.retailPrice}}</view>
-                </view>
-                <view class="capsule-tag" wx:if="{{item.isNew == true}}">
-                  <zan-capsule color="#a78845" leftText="N" rightText="新 品" />
-                </view>
-                <view class="capsule-tag" wx:if="{{item.counterPrice > item.retailPrice}}">
-                  <zan-capsule color="#b4282d" leftText="H" rightText="折 扣" />
-                </view>
-              </view>
-            </view>
-          </swiper-item>
+  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <swiper-item wx:for="{{banner}}" wx:key="id">
+      <block wx:if="{{item.link>0}}">
+        <navigator url="/pages/goods/goods?id={{item.link}}">
+        <image src="{{item.url}}" background-size="cover"></image>
         </navigator>
       </block>
-    </swiper>
+      <block wx:else>
+        <image src="{{item.url}}" background-size="cover"></image>
+      </block>
+    </swiper-item>
+  </swiper>
+  <view class="a-section a-brand">
+    <view class="h">
+      <navigator url="../brand/brand">
+        <text class="txt">正在直播</text>
+      </navigator>
+    </view>
+  </view>
+  <view class="m-menu">
+    <navigator class="item" target="miniProgram" app-id="wxc4f812079fc9ff0d" path="/l/SBfl4Qoc-QRNHi1q.html">
+      <image src="../../images/live.png" background-size="cover"></image>
+      <text>肖老师</text>
+    </navigator>
+    <!-- <navigator class="item" url="/pages/category/category?id={{item.id}}" wx:for="{{channel}}" wx:key="id">
+      <image src="{{item.iconUrl}}" background-size="cover"></image>
+      <text>{{item.name}}</text>
+    </navigator> -->
   </view>
 
-  <view class="a-section a-groupon" wx:if="{{groupons.length > 0}}">
+  <!-- <view class="a-section a-coupon" wx:if="{{coupon.length > 0}}">
+    <view class="h">
+      <view class="title">
+        <view>
+          <navigator url="/pages/coupon/coupon">
+            <text class="txt">优惠券</text>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{coupon.length>0}}" class="b">
+      <view class="item" wx:for="{{coupon}}" wx:for-index="index" wx:for-item="item" wx:key="id" bindtap="getCoupon" data-index="{{item.id}}">
+        <view class="tag">{{item.tag}}</view>
+        <view class="content">
+          <view class="left">
+            <view class="discount">{{item.discount}}元</view>
+            <view class="min"> 满{{item.min}}元使用</view>
+          </view>
+          <view class="right">
+            <view class="name">{{item.name}}</view>
+            <view class="desc">{{item.desc}}</view>
+            <view class="time" wx:if="{{item.days != 0}}">有效期：{{item.days}}天</view>
+            <view class="time" wx:else> 有效期：{{item.startTime}} - {{item.endTime}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view> -->
+
+  <!-- <view class="a-section a-groupon" wx:if="{{groupons.length > 0}}">
     <view class="h">
       <view class="title">
         <view>
           <navigator url="/pages/groupon/grouponList/grouponList">
-            <text class="txt">优惠专区</text>
+            <text class="txt">团购专区</text>
           </navigator>
         </view>
       </view>
@@ -56,13 +86,14 @@
             <view class="text">
               <view class="header">
                 <text class="name">{{item.name}}</text>
-                <view class="capsule-tag">
-                  <zan-capsule color="#a78845" leftText="{{item.grouponMember}}人成团" rightText="立减{{item.grouponDiscount}}" />
-                </view>
+                <van-tag type="primary">{{item.grouponMember}}人成团</van-tag>
+              </view>
+              <view class="expire">
+                <van-tag round type="warning">有效期至 {{item.expireTime}}</van-tag>
               </view>
               <text class="desc">{{item.brief}}</text>
               <view class="price">
-                <view class="counterPrice">原价：￥{{item.retailPrice}}</view>
+                <view class="counterPrice">现价：￥{{item.retailPrice}}</view>
                 <view class="retailPrice">团购价：￥{{item.grouponPrice}}</view>
               </view>
             </view>
@@ -70,26 +101,13 @@
         </navigator>
       </view>
     </view>
-  </view>
-
-  <view class="a-section a-new" wx:if="{{newGoods.length > 0}}">
-    <view class="h">
-      <view class="title">
-        <navigator url="../newGoods/newGoods">
-          <text class="txt">新品首发</text>
-        </navigator>
-      </view>
-    </view>
-    <goodList goods="{{newGoods}}"></goodList>
-  </view>
+  </view> -->
 
   <view class="a-section a-brand">
     <view class="h">
-      <view class="title">
-        <navigator url="../brand/brand">
-          <text class="txt">品牌制造商直供</text>
-        </navigator>
-      </view>
+      <navigator url="../brand/brand">
+        <text class="txt">课程录像</text>
+      </navigator>
     </view>
     <view class="b">
       <view class="item item-1" wx:for="{{brands}}" wx:key="id">
@@ -98,6 +116,50 @@
             <image class="img" src="{{item.picUrl}}" mode="aspectFill"></image>
             <view class="mt">
               <text class="brand">{{item.name}}</text>
+              <text class="price">{{item.floorPrice}}</text>
+              <text class="unit">元起</text>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- <view class="a-section a-new" wx:if="{{newGoods.length > 0}}">
+    <view class="h">
+      <view>
+        <navigator url="../newGoods/newGoods">
+          <text class="txt">周一周四 · 新品首发</text>
+        </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item" wx:for="{{newGoods}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+        <navigator url="../goods/goods?id={{item.id}}">
+          <image class="img" src="{{item.picUrl}}" background-size="cover"></image>
+          <text class="name">{{item.name}}</text>
+          <text class="price">￥{{item.retailPrice}}</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <view class="a-section a-popular" wx:if="{{hotGoods.length > 0}}">
+    <view class="h">
+      <view>
+        <navigator url="../hotGoods/hotGoods">
+          <text class="txt">人气推荐</text>
+        </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item" wx:for="{{hotGoods}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+        <navigator url="/pages/goods/goods?id={{item.id}}">
+          <image class="img" src="{{item.picUrl}}" background-size="cover"></image>
+          <view class="right">
+            <view class="text">
+              <text class="name">{{item.name}}</text>
+              <text class="desc">{{item.brief}}</text>
+              <text class="price">￥{{item.retailPrice}}</text>
             </view>
           </view>
         </navigator>
@@ -105,18 +167,9 @@
     </view>
   </view>
 
-  <view class="good-grid" wx:for="{{floorGoods}}" wx:key="id">
-    <navigator url="/pages/category/category?id={{item.id}}" class="more-a">
-      <view class="h" wx:if="{{item.goodsList.length > 0}}">
-        <text>{{item.name}}</text>
-      </view>
-    </navigator>
-    <goodList goods="{{item.goodsList}}"></goodList>
-  </view>
-
-  <view class="a-section a-topic" wx:if="topics.length > 0">
+  <view class="a-section a-topic" wx:if="topics.length > 0" hidden="{{topics.length <= 0}}">
     <view class="h">
-      <view class="title">
+      <view>
         <navigator url="/pages/topic/topic">
           <text class="txt">专题精选</text>
         </navigator>
@@ -129,6 +182,7 @@
             <image class="img" src="{{item.picUrl}}" background-size="cover"></image>
             <view class="np">
               <text class="name">{{item.title}}</text>
+              <text class="price">￥{{item.price}}元起</text>
             </view>
             <text class="desc">{{item.subtitle}}</text>
           </navigator>
@@ -136,5 +190,23 @@
       </scroll-view>
     </view>
   </view>
-
+  <view class="good-grid" wx:for="{{floorGoods}}" wx:key="id">
+    <view class="h">
+      <text>{{item.name}}</text>
+    </view>
+    <view class="b">
+      <block wx:for="{{item.goodsList}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">
+        <view class="item {{iindex % 2 == 0 ? '' : 'item-b'}}">
+          <navigator url="../goods/goods?id={{iitem.id}}" class="a">
+            <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
+            <text class="name">{{iitem.name}}</text>
+            <text class="price">￥{{iitem.retailPrice}}</text>
+          </navigator>
+        </view>
+      </block>
+    </view>
+    <navigator url="/pages/category/category?id={{item.id}}" class="t">
+      <view class="txt">{{'更多'+item.name+'好物 >'}}</view>
+    </navigator>
+  </view> -->
 </view>

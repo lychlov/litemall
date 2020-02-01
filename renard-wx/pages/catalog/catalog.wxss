@@ -34,14 +34,14 @@
 }
 
 .menu-box-list .hover {
-  color: #a78845;
+  color: #6A1017;
 }
 
 .menu-box-list .hover .l {
   width: 10rpx;
   height: 10rpx;
   position: absolute;
-  border: 2rpx solid #a78845;
+  border: 2rpx solid #6A1017;
   border-radius: 50%;
   margin-left: -38rpx;
   margin-top: 30rpx;

@@ -1,8 +1,7 @@
 {
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "课程学习",
+  "enablePullDownRefresh": true,
   "usingComponents": {
-    "zan-capsule": "/components/capsule/index",
-    "goodList": "/components/goodList/goodList",
     "van-notice-bar": "/components/notice-bar/index"
   }
 }
