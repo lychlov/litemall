@@ -35,7 +35,7 @@ Page({
     ],
   },
   onItemClick: function (event) {
-    var targetUrl = "../course/course";
+    var targetUrl = "../courseDetail/courseDetail";
     targetUrl = targetUrl + "?courseName=" + event.currentTarget.dataset.course_name + "&courseTeacher=" + event.currentTarget.dataset.course_teacher
     console.log(targetUrl)
     wx.navigateTo({

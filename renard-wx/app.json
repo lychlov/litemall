@@ -25,7 +25,9 @@
     "pages/groupon/myGroupon/myGroupon",
     "pages/groupon/grouponDetail/grouponDetail",
     "pages/groupon/grouponList/grouponList",
-    "pages/course/courseNav/courseNav"
+    "pages/course/courseNav/courseNav",
+    "pages/course/courseDetail/courseDetail",
+    "pages/course/video/video"
   ],
   "window": {
     "navigationBarTitleText": "Renard",
@@ -71,5 +73,6 @@
   },
   "debug": true,
   "sitemapLocation": "sitemap.json",
-  "navigateToMiniProgramAppIdList": ["wxc4f812079fc9ff0d"]
+  "navigateToMiniProgramAppIdList": ["wxc4f812079fc9ff0d"],
+  "requiredBackgroundModes": ["audio"]
 }
