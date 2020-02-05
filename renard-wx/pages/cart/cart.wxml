@@ -1,9 +1,9 @@
 <view class="container">
   <view class="no-login" wx:if="{{!hasLogin}}">
     <view class="c">
-      <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
-      <text>还没有登录</text>
-      <button plain="true" bindtap="goLogin">去登录</button>
+      <image src="../../images/wechat_login.png" />
+      <text></text>
+      <button plain="true" bindtap="goLogin">微信登录</button>
     </view>
   </view>
   <view class='login' wx:else>

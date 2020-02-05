@@ -24,7 +24,8 @@
     "pages/goods/goods",
     "pages/groupon/myGroupon/myGroupon",
     "pages/groupon/grouponDetail/grouponDetail",
-    "pages/groupon/grouponList/grouponList"
+    "pages/groupon/grouponList/grouponList",
+    "pages/course/courseNav/courseNav"
   ],
   "window": {
     "navigationBarTitleText": "Renard",

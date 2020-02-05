@@ -105,8 +105,8 @@
 
   <view class="a-section a-brand">
     <view class="h">
-      <navigator url="../brand/brand">
-        <text class="txt">课程录像</text>
+      <navigator url="../course/courseNav/courseNav">
+        <text class="txt">课程目录</text>
       </navigator>
     </view>
     <view class="b">

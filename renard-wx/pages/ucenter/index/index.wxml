@@ -31,12 +31,24 @@
   </view>
   <view class="my-item-list">
     <view class="my-item">
-      <navigator url="/pages/select-address/index" hover-class="none">课程任务</navigator>
+      <navigator url="/pages/select-address/index" hover-class="none">我的课程</navigator>
       <image src="../../../images/right-icon.png" />
     </view>
     <view class="my-item">
-      <navigator url="/pages/select-address/index" hover-class="none">习题任务</navigator>
+      <navigator url="/pages/select-address/index" hover-class="none">我的练习</navigator>
       <image src="../../../images/right-icon.png" />
+    </view>
+    <view class="my-item">
+      <navigator url="/pages/select-address/index" hover-class="none">学习积分</navigator>
+      <image src="../../../images/right-icon.png" />
+    </view>
+    <view class="my-item">
+      <navigator url="/pages/select-address/index" hover-class="none">学习报表</navigator>
+      <image src="../../../images/right-icon.png" />
+      <view class="my-item">
+      <navigator url="/pages/select-address/index" hover-class="none">我要吐槽</navigator>
+      <image src="../../../images/right-icon.png" />
+    </view>
     </view>
   </view>
 </view>
