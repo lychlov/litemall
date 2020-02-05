@@ -139,9 +139,10 @@ Page({
     var that = this;
     wx.getSystemInfo({ //根据手机的宽度计算滑条的位置
       success: function (res) {
-        var sliderWidth = res.windowWidth / 2 - 10
+        var sliderWidth = res.windowWidth / 2
         that.setData({
-          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth),
+          sliderWidth: sliderWidth,
           mainTitle: mainTitle,
           speaker:speaker
         });

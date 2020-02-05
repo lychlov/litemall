@@ -13,7 +13,7 @@
             <view class="weui-navbar__title">{{item}}</view>
           </view>
         </block>
-        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px)"></view>
+        <view class="weui-navbar__slider" style="width: {{sliderWidth}}px;left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px)"></view>
       </view>
       
       <view class="weui-tab__panel">

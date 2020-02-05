@@ -46,7 +46,7 @@ Page({
   goOrder() {
     if (app.globalData.hasLogin) {
       wx.navigateTo({
-        url: "/pages/ucenter/order/order"
+        url: "/pages/index/index"
       });
     } else {
       wx.navigateTo({

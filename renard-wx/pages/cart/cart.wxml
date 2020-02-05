@@ -7,10 +7,21 @@
     </view>
   </view>
   <view class='login' wx:else>
-    <view class="service-policy">
-      <view class="item">30天无忧退货</view>
-      <view class="item">48小时快速退款</view>
-      <view class="item">满88元免邮费</view>
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+                <view class="weui-navbar__slider" style="width: {{sliderWidth}}px;left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px)"></view>
+            </view>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">学员自己提出的问题</view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">论坛中精选出来的问题</view>
+            </view>
+        </view>
     </view>
     <view class="no-cart" wx:if="{{cartGoods.length <= 0}}">
       <view class="c">

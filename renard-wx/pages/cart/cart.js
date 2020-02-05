@@ -3,7 +3,6 @@ var api = require('../../config/api.js');
 var user = require('../../utils/user.js');
 
 var app = getApp();
-
 Page({
   data: {
     cartGoods: [],
@@ -11,8 +10,14 @@ Page({
       "goodsCount": 0,
       "goodsAmount": 0.00,
       "checkedGoodsCount": 0,
-      "checkedGoodsAmount": 0.00
+      "checkedGoodsAmount": 0.00,
+      
     },
+    tabs: ["我的提问", "精选问答"],
+    activeIndex: 0,
+    sliderWidth: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
     isEditCart: false,
     checkedAllStatus: true,
     editCartList: [],
@@ -20,6 +25,24 @@ Page({
   },
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
+    var that = this;
+    wx.getSystemInfo({
+        success: function(res) {
+            var sliderWidth = res.windowWidth / 2;
+            that.setData({
+                sliderWidth: sliderWidth,
+                sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+                sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+            });
+        }
+    });
+  },
+
+  tabClick: function (e) {
+    this.setData({
+        sliderOffset: e.currentTarget.offsetLeft,
+        activeIndex: e.currentTarget.id
+    });
   },
   onReady: function() {
     // 页面渲染完成
