@@ -94,12 +94,12 @@
   display: block;
   font-size: 33rpx;
   height: 43rpx;
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 
 .a-brand .mt .price, .a-brand .mt .unit {
   font-size: 25rpx;
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 
 .a-brand .item-1 {
