@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "课程目录",
   "usingComponents": {
+    "towxml":"/towxml/towxml"
   }
+  
 }

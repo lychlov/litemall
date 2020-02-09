@@ -13,11 +13,13 @@ Page({
   data: {
     quizType: "",
     quizList: [],
+    isLoading: true,					// 判断是否尚在加载中
+		article: {}
   },
 
   onItemClick: function (event) {
-    var targetUrl = "../courseDetail/courseDetail";
-    targetUrl = targetUrl + "?courseName=" + event.currentTarget.dataset.course_name + "&courseTeacher=" + event.currentTarget.dataset.course_teacher
+    var targetUrl = "/pages/quiz/answer/answer";
+    targetUrl = targetUrl + "?quizName=" + event.currentTarget.dataset.name + "&quizCourse=" + event.currentTarget.dataset.course
     console.log(targetUrl)
     wx.navigateTo({
       url: targetUrl
@@ -44,6 +46,23 @@ Page({
       }
     });
     console.log(that.data.quizList)
+
+
+    
+    let result = app.towxml('$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$','markdown',{
+			theme:'light',					// 主题，默认`light`
+			events:{					// 为元素绑定的事件方法
+				tap:(e)=>{
+					console.log('tap',e);
+				}
+			}
+		});
+    console.log(result)
+		// 更新解析数据
+		this.setData({
+			article:result,
+			isLoading: false
+		});
   },
 
   /**

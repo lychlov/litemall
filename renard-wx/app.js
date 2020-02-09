@@ -3,6 +3,7 @@ var api = require('./config/api.js');
 var user = require('./utils/user.js');
 
 App({
+  towxml:require('/towxml/index'),
   onLaunch: function() {
     wx.cloud.init({
       env: 'snowtogether-54ny0'

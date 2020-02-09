@@ -1,9 +1,13 @@
 <!--pages/nav/nav.wxml-->
 <view class='top'></view>
-<view class='courselists' wx:for="{{quizList}}" bindtap='onItemClick' data-quizName="{{item.courseName}}" data-course_teacher="{{item.courseTeacher}}">
+<view class='courselists' wx:for="{{quizList}}" bindtap='onItemClick' data-quizName="{{item.name}}" data-course="{{item.course}}">
   <image src='{{item.cover}}' class='type-pic'></image>
   <view class='text-box'>
     <view class='course-name'>{{item.name}}</view>
     <view class='course-teacher'>课程：{{item.course}} (用时{{item.duration}}分钟)</view>
   </view>
 </view>
+<view >
+    <towxml nodes="{{article}}">
+    </towxml>
+  </view>
