@@ -89,7 +89,6 @@ Page({
   },
   getCurrentCategory: function(item) {
     let that = this;
-
     for (var key in that.data.allList) {
       if (key == item.id) {
         that.setData({
@@ -120,9 +119,9 @@ Page({
     this.getCurrentCategory(event.currentTarget.dataset.id);
   },
   levelClick: function(e) {
-    console.log(e.currentTarget.dataset.id)
+    console.log(e.currentTarget.dataset.name)
     wx.navigateTo({
-      url: "/pages/category/category?id=" + e.currentTarget.dataset.id
+      url: "/pages/quiz/quizList/quizList?quizType=" + e.currentTarget.dataset.name
     })
   }
 })

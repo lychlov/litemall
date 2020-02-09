@@ -19,7 +19,7 @@
           <!-- <navigator url="/pages/category/category?id={{item.id}}" wx:key="id" wx:for="{{currentSubCategoryList}}">
             <image class="icon" src="{{item.wapBannerUrl}}"></image>
           </navigator> -->
-          <view class="menu-list-item" wx:for="{{item.subLevel}}"  wx:for-item="subs" wx:key="id" bindtap="levelClick" data-id="{{item.id}}">
+          <view class="menu-list-item" wx:for="{{item.subLevel}}"  wx:for-item="subs" wx:key="id" bindtap="levelClick" data-name="{{subs.name}}">
             <image class="icon" src="{{subs.iconPath}}"></image>
             <text class="txt">{{subs.name}}</text>
           </view>
