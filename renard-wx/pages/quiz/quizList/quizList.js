@@ -19,7 +19,7 @@ Page({
 
   onItemClick: function (event) {
     var targetUrl = "/pages/quiz/answer/answer";
-    targetUrl = targetUrl + "?quizName=" + event.currentTarget.dataset.name + "&quizCourse=" + event.currentTarget.dataset.course
+    targetUrl = targetUrl + "?quizName=" + event.currentTarget.dataset.quizName + "&quizCourse=" + event.currentTarget.dataset.course
     console.log(targetUrl)
     wx.navigateTo({
       url: targetUrl
