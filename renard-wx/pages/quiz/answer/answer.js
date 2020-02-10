@@ -1,6 +1,7 @@
 // pages/answer/index.js
 import { $wuxCountDown } from '../../../wux/index'
 const { $Message } = require('../../../dist/base/index');
+
 Page({
 
   data: {
@@ -8,7 +9,7 @@ Page({
     result: {}, //题目
     total: 0, //题目总总数
     menu:'',//套题id
-    questionMenu:'',//套题名称
+    quizName:'',//套题名称
     percent: 0, //进度条百分比
     time: 45, //时间
     Countdown: '', //倒计时
@@ -67,38 +68,42 @@ Page({
     showVideo:false
   },
 
-  onLoad: function(e) {
-    console.log('进入答题')
-
+  onLoad(e) {
     var that = this;
-    var menu = e.quizName;
-    var questionMenu = e.quizName;
+    var menu = e.id;
+    var quizName = e.quizName;
+    
     this.setData({
       menu: menu,
-      questionMenu: questionMenu
-    });
+      quizName: quizName
+    })
     wx.getSystemInfo({
-      success: function(res) {
-        console.log(res)
+      success(res) {
         that.setData({
-          windowWidth: res.windowWidth,
-          visible3: false,
+          windowWidth: res.windowWidth
         })
       }
+    })
+    var userInfo = wx.getStorageSync('userInfo')
+    console.log(userInfo)
+    const db = wx.cloud.database();
+    db.collection('jingzhi-quiz-record').where({
+      quiz_name:quizName,
+      open_id: userInfo,
+    }).get({
+      success: function(res) {
+        // res.data 是包含以上定义的两条记录的数组
+        console.log('载入答题历史')
+        if(res.data.question){
+          this.setData({
+            visible3: true,
+          })
+        }else{
+          console.log('载入')
+          that.fromBegin(that.data.quizName)
+        }
+      }
     });
-    this.fromBegin(menu);
-    // wx.u.checkSaveHistory(menu).then(result=>{
-    //   //检测到有保存的记录
-    //   if(result.result){
-    //     this.setData({
-    //       visible3: true,
-    //     })
-    //   }else{
-    //     //没有保存的记录
-    //     this.fromBegin(menu)
-    //   }
-    // })
-    
     
   },
   onReady(res) {
@@ -182,55 +187,31 @@ Page({
     })
   },
   //重头开始答题
-  fromBegin(menu){
-    // var time = res1.result.time
-    var time = 10;
-    // var questionNum = res1.result.questionNum
-    var questionNum = 10;
-    //获取题目
-    // console.log(res.result);
-    this.setData({
-      loading: false,
-      result: [{
-        "type":"单选",
-        "choose":"",
-        "title":"What's your name?",
-        "choseList": [
-          {"id":1,
-          "item":"Lisa",
-          "isChose":1,},
-          {"id":1,
-          "item":"Jinne",
-          "isChose":0,},
-          {"id":1,
-          "item":"Jone",
-          "isChose":0,},
-          {"id":1,
-          "item":"Jack",
-          "isChose":0,}]
-      },{
-        "type":"单选",
-        "choose":"",
-        "title":"What's your name?",
-        "choseList": [
-          {"id":1,
-          "item":"Lisa",
-          "isChose":0,},
-          {"id":1,
-          "item":"Jinne",
-          "isChose":1,},
-          {"id":1,
-          "item":"Jone",
-          "isChose":0,},
-          {"id":1,
-          "item":"Jack",
-          "isChose":0,}]
-      }],
-      total: 2,
-    })
+  fromBegin(quizName){
+    // 获取题目
+    console.log('开始载入')
+    console.log(quizName);
+    const db = wx.cloud.database();
+    db.collection('jingzhi-question').where({
+      quiz_name: quizName,
+    }).orderBy('index','asc')
+    .get({
+      success: function(res) {
+        // res.data 是包含以上定义的两条记录的数组
+        console.log("测试数据库")
+        console.log(res)
+        that.setData({
+          result: res.data,
+          loading: false,
+          total: res.data.length,
+                    
+        });
+        var time = res.data[0].quiz_duration;
+        this.Countdown(parseInt(time) * 60000)
+        this.setThisData(0)
+      }
+    });
 
-    this.Countdown(parseInt(time) * 60000)
-    this.setThisData(0)
   },
   //设置当前题目
   setThisData(i) {
@@ -267,7 +248,7 @@ Page({
       return
     }
     //记录选择的答案
-    if (this.data.type == '单选') {
+    if (this.data.type == 1) {
       //单选
       var choose = this.data.current;
       this.data.result[this.data.index - 1].choose = [choose];
@@ -326,8 +307,6 @@ Page({
       questionInfo: questionInfo,
       current: detail.value
     });
-    console.log(detail)
-    console.log(this.data.current)
   },
   //多选
   handleChangeD({detail = {},target = {}}) {
@@ -384,7 +363,7 @@ Page({
         });
         return;
       }
-      if (r[i].type == '单选' ) {
+      if (r[i].type == 1 ) {
         if (r[i].choose) {
           var choose = r[i].choose[0];
         }
@@ -394,7 +373,7 @@ Page({
         }
       }
       //单选
-      if (type == '多选') {
+      if (type == '1') {
         const current = this.data.current;
         if (current == "") {
           wx.showToast({
@@ -460,8 +439,8 @@ Page({
     var result = this.data.result
     var score = this.data.questionOk
     var menu = this.data.menu
-    var questionMenu = this.data.questionMenu
-    var params = { 'menu': menu, 'score': score, 'result': result, 'questionMenu': questionMenu, 'saveStatus': 0, second:second,minute:minute }
+    var quizName = this.data.quizName
+    var params = { 'menu': menu, 'score': score, 'result': result, 'quizName': quizName, 'saveStatus': 0, second:second,minute:minute }
     wx.u.addHistory(params).then(res => {
       console.log(res);
       this.setData({
@@ -483,8 +462,8 @@ Page({
     var result = this.data.result
     var score = this.data.questionOk
     var menu = this.data.menu
-    var questionMenu = this.data.questionMenu
-    var params={'menu':menu,'score':score,'result':result,'questionMenu':questionMenu,'saveStatus':1}
+    var quizName = this.data.quizName
+    var params={'menu':menu,'score':score,'result':result,'quizName':quizName,'saveStatus':1}
     wx.u.addHistory(params).then(res=>{
       console.log(res);
       this.setData({
@@ -503,7 +482,7 @@ Page({
       }
     }
     //添加错题
-    wx.u.addError(menu, err, questionMenu).then(res=>{})
+    wx.u.addError(menu, err, quizName).then(res=>{})
     //统计分数
     wx.u.getStatistics(menu).then(res=>{
       wx.u.statistics(res.result.objectId, this.data.questionOk).then(res1=>{})
