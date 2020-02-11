@@ -85,7 +85,38 @@ function showErrorToast(msg) {
   })
 }
 
+function addHistory (params){
+  return new Promise((resolve, reject) => {
+    const db = wx.cloud.database()
+    console.log(params)
+    let openID = params.openID;
+    let quizName = params.quizName
+    db.collection('jingzhi-quiz-record').where({
+      quizName:quizName,
+      openID:openID
+    }).get().then(res=>{
+      console.log(res)
+      if(res.data.length>0){
+        db.collection('jingzhi-quiz-record').doc(res.data[0]._id).set({
+          data:params
+        }).then(res1=>{
+          console.log(res1)
+          resolve({ 'result': res1._id })
+        })
+      }else{
+        db.collection('jingzhi-quiz-record').add({
+          data: params,
+        }).then(res2=>{
+          console.log(res2)
+          resolve({ 'result': res2._id})
+        })
+      }
+    })
+  })
+}
+
 module.exports = {
+  addHistory,
   formatTime,
   request,
   redirect,

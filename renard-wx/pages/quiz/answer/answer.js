@@ -1,15 +1,15 @@
 // pages/answer/index.js
 import { $wuxCountDown } from '../../../wux/index'
 const { $Message } = require('../../../dist/base/index');
-
 Page({
 
   data: {
     loading: true, //加载中
     result: {}, //题目
     total: 0, //题目总总数
-    menu:'',//套题id
-    quizName:'',//套题名称
+    menu: '',//套题id
+    quizName: '',
+    questionMenu: '',//套题名称
     percent: 0, //进度条百分比
     time: 45, //时间
     Countdown: '', //倒计时
@@ -24,11 +24,11 @@ Page({
     questionErr: 0,//错题个数
     questionOk: 0,// 正确个数
     percentage: 0,
-    visible1:false,
-    visible2:false,
-    visible3:false,
-    visible4:false,
-    action1:[
+    visible1: false,
+    visible2: false,
+    visible3: false,
+    visible4: false,
+    action1: [
       {
         name: '取消'
       },
@@ -38,7 +38,7 @@ Page({
         loading: false
       }
     ],
-    action2:[
+    action2: [
       {
         name: '确定',
         color: '#2db7f5',
@@ -65,16 +65,13 @@ Page({
         loading: false
       }
     ],
-    showVideo:false
+    showVideo: false
   },
 
   onLoad(e) {
     var that = this;
-    var menu = e.id;
     var quizName = e.quizName;
-    
     this.setData({
-      menu: menu,
       quizName: quizName
     })
     wx.getSystemInfo({
@@ -84,28 +81,28 @@ Page({
         })
       }
     })
-    var userInfo = wx.getStorageSync('userInfo')
+    var userInfo = wx.getStorageSync('userInfo').nickName
     console.log(userInfo)
     const db = wx.cloud.database();
     db.collection('jingzhi-quiz-record').where({
-      quiz_name:quizName,
+      quiz_name: quizName,
       open_id: userInfo,
     }).get({
-      success: function(res) {
+      success: function (res) {
         // res.data 是包含以上定义的两条记录的数组
         console.log('载入答题历史')
-        if(res.data.question){
+        if (res.data.question) {
           this.setData({
             visible3: true,
           })
-        }else{
+        } else {
           console.log('载入')
           that.fromBegin(that.data.quizName)
         }
       }
     });
-    
   },
+
   onReady(res) {
     this.videoContext = wx.createVideoContext('myVideo')
   },
@@ -126,17 +123,17 @@ Page({
         for (let object of data.questionList) {
           if (object.judge == undefined) {
             break;
-          }else{
-            if(object.judge == 1){
+          } else {
+            if (object.judge == 1) {
               questionOk++
-            } else if (object.judge == 0){
+            } else if (object.judge == 0) {
               questionErr++
             }
           }
           start++
         }
         //计算百分比
-        let percentage = questionOk / (start-1) * 100
+        let percentage = questionOk / (start - 1) * 100
         percentage = percentage.toFixed(2)
 
         //进度条
@@ -147,17 +144,17 @@ Page({
           loading: false,
           result: data.questionList,
           total: data.questionList.length,
-          index:start,
+          index: start,
           questionOk: questionOk,
           questionErr: questionErr,
           percentage: percentage,
           percent: percent
 
         })
-        
+
         var time = (parseInt(data.minute) * 60000 + parseInt(data.second) * 1000)
         this.Countdown(time)
-        this.setThisData(start-1)
+        this.setThisData(start - 1)
       })
     }
     this.setData({
@@ -171,8 +168,8 @@ Page({
       render(date) {
         const min = this.leadingZeros(date.min, 2) + ':'
         const sec = this.leadingZeros(date.sec, 2) + ''
-        console.log(date)
-        console.log(date.sec)
+        // console.log(date)
+        // console.log(date.sec)
         //答题时间结束
         if (date.min === 0 && date.sec === 0) {
           console.log("时间结束")
@@ -180,37 +177,68 @@ Page({
         }
         this.setData({
           Countdown: min + sec,
-          min:min,
-          sec:sec
+          min: min,
+          sec: sec
         })
       }
     })
   },
   //重头开始答题
-  fromBegin(quizName){
-    // 获取题目
-    console.log('开始载入')
-    console.log(quizName);
+  fromBegin(quizName) {
+    let that = this
+    console.log("开始")
+    //获取题目
     const db = wx.cloud.database();
     db.collection('jingzhi-question').where({
       quiz_name: quizName,
-    }).orderBy('index','asc')
-    .get({
-      success: function(res) {
-        // res.data 是包含以上定义的两条记录的数组
-        console.log("测试数据库")
-        console.log(res)
-        that.setData({
-          result: res.data,
-          loading: false,
-          total: res.data.length,
-                    
-        });
-        var time = res.data[0].quiz_duration;
-        this.Countdown(parseInt(time) * 60000)
-        this.setThisData(0)
-      }
-    });
+    }).orderBy('index', 'asc')
+      .get({
+        success: function (res) {
+          // res.data 是包含以上定义的两条记录的数组
+          console.log("测试数据库")
+          console.log(res)
+          let result = res.data
+          const selections = ["A", "B", "C", "D", "E", "F", "G"]
+          for (var i = 0; i < result.length; i += 1) {
+            let choseList = []
+            if (result[i].A) {
+              choseList.push({
+                "item": result[i].A,
+                "isChose": 0,
+              })
+            }
+            if (result[i].B) {
+              choseList.push({
+                "item": result[i].B,
+                "isChose": 0,
+              })
+            }
+            if (result[i].C) {
+              choseList.push({
+                "item": result[i].C,
+                "isChose": 0,
+              })
+            }
+            if (result[i].D) {
+              choseList.push({
+                "item": result[i].D,
+                "isChose": 0,
+              })
+            }
+            result[i].choseList = choseList
+          }
+          console.log(result)
+          that.setData({
+            result: result,
+            loading: false,
+            total: res.data.length,
+          });
+          var time = res.data[0].quiz_duration;
+          that.Countdown(parseInt(time) * 60000)
+          console.log("huoqu shij ")
+          that.setThisData(0)
+        }
+      });
 
   },
   //设置当前题目
@@ -229,11 +257,8 @@ Page({
 
     const answer = [];
     //获取正确答案
-    for (var j = 0; j < r[i].choseList.length; j++) {
-      if (r[i].choseList[j].isChose) {
-        answer.push(r[i].choseList[j].item);
-      }
-    }
+    console.log("正确答案")
+    answer.push(r[i][r[i].answer]);
     console.log(answer);
 
     this.setData({
@@ -244,14 +269,14 @@ Page({
   },
   //统计答题
   statistical() {
-    if ((this.data.questionErr + this.data.questionOk) == this.data.result.length){
+    if ((this.data.questionErr + this.data.questionOk) == this.data.result.length) {
       return
     }
     //记录选择的答案
-    if (this.data.type == 1) {
+    if (this.data.type == '单选') {
       //单选
       var choose = this.data.current;
-      this.data.result[this.data.index - 1].choose = [choose];
+      this.data.result[this.data.index - 1].choose = choose;
     } else {
       //多选
       var choose = this.data.currentD;
@@ -268,7 +293,7 @@ Page({
       questionOk = questionOk + 1
       result[index - 1].judge = 1
 
-    }else{
+    } else {
       questionErr = questionErr + 1
       result[index - 1].judge = 0
     }
@@ -295,21 +320,25 @@ Page({
     target = {}
   }) {
     let questionInfo = this.data.questionInfo
+    let result = this.data.result
     //判断答案
-    if (target.dataset.id) {
+    if (questionInfo.answer === detail.value[0]) {
       console.log('ok')
       questionInfo.isOk = 1
     } else {
       questionInfo.isOk = 0
     }
-
+    // questionInfo.choose = detail.value
+    result[this.data.index - 1] = questionInfo
+    // console.log(result)
     this.setData({
       questionInfo: questionInfo,
-      current: detail.value
+      current: detail.value,
+      // result:result
     });
   },
   //多选
-  handleChangeD({detail = {},target = {}}) {
+  handleChangeD({ detail = {}, target = {} }) {
     let questionInfo = this.data.questionInfo
     const index = this.data.currentD.indexOf(detail.value);
     index === -1 ? this.data.currentD.push(detail.value) : this.data.currentD.splice(index, 1);
@@ -325,7 +354,7 @@ Page({
       console.log(indexs)
       var indexOf = answer.indexOf(currentD[i].substring(indexs + 1));
       console.log(indexOf)
-      if(indexOf >= 0){
+      if (indexOf >= 0) {
         rightNum += 1;
       }
     }
@@ -333,13 +362,13 @@ Page({
     console.log(rightNum)
     console.log(currentD)
     //判断答案
-    if(rightNum == answer.length){
+    if (rightNum == answer.length) {
       questionInfo.isOk = 1
-    }else{
+    } else {
       questionInfo.isOk = 0
     }
     this.setData({
-      questionInfo : questionInfo
+      questionInfo: questionInfo
     })
 
   },
@@ -347,6 +376,7 @@ Page({
   handlePageChange({ detail }) {
     const action = detail.type;
     const r = this.data.result;
+    let questionInfo = this.data.questionInfo
     console.log(r);
 
     //上下一题
@@ -355,7 +385,7 @@ Page({
       const type = this.data.type;
       if (i == r.length) {
         this.statistical()
-        
+
         $Message({
           content: '题目已答完,请交卷',
           duration: 3,
@@ -363,9 +393,9 @@ Page({
         });
         return;
       }
-      if (r[i].type == 1 ) {
+      if (r[i].type == '单选') {
         if (r[i].choose) {
-          var choose = r[i].choose[0];
+          var choose = r[i].choose;
         }
       } else {
         if (r[i].choose) {
@@ -373,7 +403,7 @@ Page({
         }
       }
       //单选
-      if (type == '1') {
+      if (type == '单选') {
         const current = this.data.current;
         if (current == "") {
           wx.showToast({
@@ -385,7 +415,7 @@ Page({
         }
       } else {
         const length = this.data.currentD.length;
-        if (length == 0){
+        if (length == 0) {
           wx.showToast({
             title: '请选择答案',
             duration: 1500,
@@ -394,23 +424,24 @@ Page({
           return;
         }
       }
-      if (choose == undefined && (this.data.disabled == false || this.data.disabled1 == false )) {
+      if (choose == undefined && (this.data.disabled == false || this.data.disabled1 == false)) {
         this.statistical()
       }
       this.setThisData(this.data.index);
-
+      console.log(choose);
       this.setData({
         index: this.data.index + 1,
         current: choose == undefined ? '' : choose,
-        currentD: choose == undefined ? []: choose,
+        currentD: choose == undefined ? [] : choose,
         disabled: choose == undefined ? false : true,
         disabled1: choose == undefined ? false : true
       });
     } else if (action === 'prev') {
       var i = this.data.index - 2;
-      if (r[i].type == '1') {
+      console.log(r[i])
+      if (r[i].type == '单选') {
         if (r[i].choose) {
-          var choose = r[i].choose[0];
+          var choose = r[i].choose;
         }
 
       } else {
@@ -419,17 +450,18 @@ Page({
         }
       }
       this.setThisData(this.data.index - 2);
+      console.log(choose);
       this.setData({
         index: this.data.index - 1,
         current: choose,
         currentD: choose,
         disabled: true,
-        disabled1:true
+        disabled1: true
       });
     }
   },
   //保存处理
-  save(){
+  save() {
     this.setData({
       loading: true,
       visible4: false
@@ -439,8 +471,8 @@ Page({
     var result = this.data.result
     var score = this.data.questionOk
     var menu = this.data.menu
-    var quizName = this.data.quizName
-    var params = { 'menu': menu, 'score': score, 'result': result, 'quizName': quizName, 'saveStatus': 0, second:second,minute:minute }
+    var questionMenu = this.data.questionMenu
+    var params = { 'menu': menu, 'score': score, 'result': result, 'questionMenu': questionMenu, 'saveStatus': 0, second: second, minute: minute }
     wx.u.addHistory(params).then(res => {
       console.log(res);
       this.setData({
@@ -454,42 +486,45 @@ Page({
     })
   },
   //交卷处理
-  submit(){
+  submit() {
     this.setData({
-      loading:true,
-      visible1:false
+      loading: true,
+      visible1: false
     })
+    var userInfo = wx.getStorageSync('userInfo').nickName
+    var second = this.data.stopSec
+    var minute = this.data.stopMin
     var result = this.data.result
     var score = this.data.questionOk
-    var menu = this.data.menu
     var quizName = this.data.quizName
-    var params={'menu':menu,'score':score,'result':result,'quizName':quizName,'saveStatus':1}
-    wx.u.addHistory(params).then(res=>{
+    var params = { 'openID':userInfo,'quizName':quizName, 'score': score, 'result': result,  'saveStatus': 0, second: second, minute: minute }
+
+    wx.u.addHistory(params).then(res => {
       console.log(res);
       this.setData({
         loading: false,
       })
-      if(res.result){
+      if (res.result) {
         wx.reLaunch({
-          url: '../history/index?id='+res.result
+          url: '../history/index?id=' + res.result
         })
-      }  
+      }
     })
     var err = [];
-    for(let object of result){
-      if(object.judge ==0 || object.judge == undefined){
+    for (let object of result) {
+      if (object.judge == 0 || object.judge == undefined) {
         err.push(object)
       }
     }
     //添加错题
-    wx.u.addError(menu, err, quizName).then(res=>{})
+    // wx.u.addError(menu, err, questionMenu).then(res => { })
     //统计分数
-    wx.u.getStatistics(menu).then(res=>{
-      wx.u.statistics(res.result.objectId, this.data.questionOk).then(res1=>{})
-    })
+    // wx.u.getStatistics(menu).then(res => {
+      // wx.u.statistics(res.result.objectId, this.data.questionOk).then(res1 => { })
+    // })
   },
   //保存对话框
-  handleSaveOpen(){
+  handleSaveOpen() {
     this.hideVideo();
     this.stop();
     this.setData({
@@ -499,17 +534,17 @@ Page({
     })
   },
   //交卷对话框
-  handleSubmitOpen(){
+  handleSubmitOpen() {
     this.hideVideo();
     this.stop();
     this.setData({
-      visible1:true,
-      stopMin:this.data.min,
-      stopSec:this.data.sec
+      visible1: true,
+      stopMin: this.data.min,
+      stopSec: this.data.sec
     })
   },
   //保存按钮
-  checkSave({ detail }){
+  checkSave({ detail }) {
     //取消
     if (detail.index === 0) {
       var time = (parseInt(this.data.stopMin) * 60000 + parseInt(this.data.stopSec) * 1000)
@@ -524,7 +559,7 @@ Page({
     }
   },
   //交卷按钮
-  checkSubmit({ detail }){
+  checkSubmit({ detail }) {
     //取消
     if (detail.index === 0) {
       var time = (parseInt(this.data.stopMin) * 60000 + parseInt(this.data.stopSec) * 1000)
@@ -533,31 +568,31 @@ Page({
       this.setData({
         visible1: false
       });
-    } else{
+    } else {
       //交卷
       this.submit();
     }
   },
-  handleSubmit(){
+  handleSubmit() {
     this.submit();
   },
   //时间到对话框
-  handleClick1(){
+  handleClick1() {
     this.setData({
       visible2: true
     });
   },
   //弹出统计下拉层
-  handleOpen(){
+  handleOpen() {
     this.hideVideo()
     this.setData({
-      actionVisible:true
+      actionVisible: true
     })
   },
   //关闭统计下拉层
-  actionCancel(){
+  actionCancel() {
     this.setData({
-      actionVisible:false
+      actionVisible: false
     })
   },
   //放大图片
@@ -568,10 +603,10 @@ Page({
       urls: [src]
     })
   },
-  showVideo(){
+  showVideo() {
     this.videoContext.play()
     this.setData({
-      showVideo:true
+      showVideo: true
     })
   },
   hideVideo: function () {
@@ -586,7 +621,7 @@ Page({
   start() {
     this.Countdown.start()
   },
-  update(time){
+  update(time) {
     this.Countdown.update(+(new Date) + parseInt(time))
   }
 })
