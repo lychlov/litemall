@@ -2,6 +2,7 @@
     "component": true,
     "usingComponents":
     {
-        "i-cell": "../cell/index"
+        "i-cell": "../cell/index",
+        "towxml":"/towxml/towxml"
     }
 }

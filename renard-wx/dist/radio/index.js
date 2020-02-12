@@ -8,6 +8,10 @@ Component({
         }
     },
     properties: {
+        nodes: {
+            type: Object,
+            value:{}
+        },
         value: {
             type: String,
             value: ''

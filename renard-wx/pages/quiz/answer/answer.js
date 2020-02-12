@@ -1,4 +1,5 @@
 // pages/answer/index.js
+var app = getApp();
 import { $wuxCountDown } from '../../../wux/index'
 const { $Message } = require('../../../dist/base/index');
 Page({
@@ -28,6 +29,7 @@ Page({
     visible2: false,
     visible3: false,
     visible4: false,
+    article:"",
     action1: [
       {
         name: '取消'
@@ -69,6 +71,14 @@ Page({
   },
 
   onLoad(e) {
+    let result = app.towxml('$8 \\over 27$','markdown',{
+			theme:'light',					// 主题，默认`light`
+		});
+    console.log(result)
+    this.setData({
+      article:result,
+    })
+
     var that = this;
     var quizName = e.quizName;
     this.setData({
@@ -201,29 +211,26 @@ Page({
           const selections = ["A", "B", "C", "D", "E", "F", "G"]
           for (var i = 0; i < result.length; i += 1) {
             let choseList = []
-            if (result[i].A) {
-              choseList.push({
-                "item": result[i].A,
-                "isChose": 0,
-              })
+            if(result[i].isMarkdown=="是"){
+              let markdown = app.towxml(result[i].content,'markdown',{
+                theme:'light',					// 主题，默认`light`
+              });
+              result[i].contentMarkdown = markdown
             }
-            if (result[i].B) {
-              choseList.push({
-                "item": result[i].B,
-                "isChose": 0,
-              })
-            }
-            if (result[i].C) {
-              choseList.push({
-                "item": result[i].C,
-                "isChose": 0,
-              })
-            }
-            if (result[i].D) {
-              choseList.push({
-                "item": result[i].D,
-                "isChose": 0,
-              })
+            for(var j=0;j<selections.length;j+=1){
+              let choseMarkdown=''
+              if(result[i][selections[j]]){
+                if(result[i].isMarkdown=="是"){
+                  choseMarkdown = app.towxml(result[i][selections[j]],'markdown',{
+                    theme:'light',					// 主题，默认`light`
+                  });
+                }
+                choseList.push({
+                  "item": result[i][selections[j]],
+                  "isChose": 0,
+                  "markdown": choseMarkdown
+                })
+              }
             }
             result[i].choseList = choseList
           }

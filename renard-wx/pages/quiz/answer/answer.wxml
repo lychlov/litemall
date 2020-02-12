@@ -25,13 +25,17 @@
   <view style='padding-bottom:44px;'>
     <view class="question-list">
       <view class="question-list-title">
-        <i-tag class="i-tags" name="单选" type="border" color="blue" wx:if="{{questionInfo.type==1}}">
+        <i-tag class="i-tags" name="单选" type="border" color="blue" wx:if="{{questionInfo.type=='单选'}}">
           单选
         </i-tag>
-        <i-tag class="i-tags" name="多选" type="border" color="blue" wx:if="{{questionInfo.type==2}}">
+        <i-tag class="i-tags" name="多选" type="border" color="blue" wx:if="{{questionInfo.type=='多选'}}">
           多选
         </i-tag>
-        <text class='question-title'>{{questionInfo.content}}</text>
+        <view>
+          <towxml wx:if="{{questionInfo.isMarkdown=='是'}}" nodes='{{questionInfo.contentMarkdown}}'></towxml>
+          <text wx:else class='question-title'>{{questionInfo.content}}</text>
+        
+        </view>
       </view>
     </view>
     <image wx:if="{{questionInfo.picUrl}}" style="width: 100%; height: 200px; background-color: #fff;" mode="aspectFit" src="{{questionInfo.picUrl}}" data-src="{{questionInfo.picUrl}}" catchtap="showPic"></image>
@@ -42,17 +46,21 @@
     </video>
     <!--答案选择 - 单选-->
     <i-panel wx:if="{{questionInfo.type=='单选'}}">
-      <i-radio-group wx:for="{{questionInfo.choseList}}" wx:key="item.id" current="{{current}}" data-id="{{item.isChose}}" bindchange="handleChange">
-
-        <i-radio disabled="{{disabled}}" position="left" value="{{s[index]}}{{item.item}}">
+      <i-radio-group wx:for="{{questionInfo.choseList}}"  current="{{current}}" data-id="{{item.isChose}}" bindchange="handleChange">
+        <i-radio wx:if="{{questionInfo.isMarkdown=='是'}}" disabled="{{disabled}}" position="left" value="{{s[index]}}" nodes="{{item.markdown}}">
         </i-radio>
+        <i-radio wx:else disabled="{{disabled}}" position="left" value="{{s[index]}}{{item.item}}">
+        </i-radio>
+        
+        
+
       </i-radio-group>
     </i-panel>
 
     <!--答案选择 - 多选-->
     <i-panel wx:if="{{questionInfo.type=='多选'}}">
-      <i-checkbox-group current="{{currentD}}" wx:for="{{questionInfo.choseList}}" wx:key="{{item.id}}" data-id="{{item.isChose}}" bindchange="handleChangeD">
-        <i-checkbox disabled="{{disabled1}}" wx:key="{{index}}" position="left" wx:key="{{item.id}}" value="{{s[index]}}{{item.item}}">
+      <i-checkbox-group current="{{currentD}}" wx:for="{{questionInfo.choseList}}"  data-id="{{item.isChose}}" bindchange="handleChangeD">
+        <i-checkbox disabled="{{disabled1}}" position="left" value="{{s[index]}}{{item.item}}">
         </i-checkbox>
       </i-checkbox-group>
     </i-panel>

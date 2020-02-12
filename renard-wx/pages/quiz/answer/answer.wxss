@@ -174,7 +174,11 @@ view.i-action-ico-bor>view.def {
   font-size: 14px;
   padding: 0;
 }
-
+view,text{
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  font-size: 33rpx;
+  color: #000000;
+}
 .view{
 	background-color: #000;
 	vertical-align: top;
@@ -182,5 +186,7 @@ view.i-action-ico-bor>view.def {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 60rpx;
-	margin: 10rpx 0;
+  margin: 10rpx 0;
+  
+
 }

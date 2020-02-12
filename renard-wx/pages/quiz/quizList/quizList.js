@@ -33,7 +33,7 @@ Page({
     that.setData({
       quizType: options.quizType,
     });
-
+    console.log(options.quizType)
     const db = wx.cloud.database();
     db.collection('jingzhi-quiz').where({
       type: options.quizType
@@ -49,18 +49,13 @@ Page({
 
 
     
-    // let result = app.towxml('$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$','markdown',{
-		// 	theme:'light',					// 主题，默认`light`
-		// 	events:{					// 为元素绑定的事件方法
-		// 		tap:(e)=>{
-		// 			console.log('tap',e);
-		// 		}
-		// 	}
-		// });
-    // console.log(result)
+    let result = app.towxml('设$A=\\{ x\\mid |x-a|<1 , x \\in R \\}$，$B=\\{ x \\mid |x-b|<2 , x \\in R \\}$，则$A \\subset B$的充分必要条件是()','markdown',{
+			theme:'light',					// 主题，默认`light`
+		});
+    console.log(result)
 		// 更新解析数据
 		this.setData({
-			// article:result,
+			article:result,
 			isLoading: false
 		});
   },

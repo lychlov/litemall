@@ -3,6 +3,8 @@
         <label wx:if="{{setClass}}" class='i-class'>
             <radio value="{{value}}" checked="{{checked}}" color="{{checked?color:''}}" disabled="{{disabled}}" class="i-radio-radio {{positionCls}}" />
             <view class="i-radio-title">{{value}}</view>
+            <towxml nodes="{{nodes}}"></towxml>
+            
         </label>
         <label wx:else>
             <radio value="{{value}}" checked="{{checked}}" color="{{checked?color:''}}" disabled="{{disabled}}" class="i-radio-radio {{positionCls}}" />
