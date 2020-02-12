@@ -23,7 +23,7 @@ Page({
       loading: false,
       total: 3,
       score: 3,
-      questions: [],
+      questions: res.data[0].result,
       beatNum: 10,
       average: 3
     })
@@ -46,7 +46,7 @@ Page({
   },
   back(){
     wx.reLaunch({
-      url: '/pages/select/index',
+      url: '/pages/catalog/catalog',
     })
   },
   analysis(){

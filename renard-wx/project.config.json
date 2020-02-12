@@ -50,7 +50,14 @@
 					"name": "题目列表-真题",
 					"pathName": "pages/quiz/quizList/quizList",
 					"query": "quizType=历年真题"
+				},
+				{
+					"id": -1,
+					"name": "history",
+					"pathName": "pages/quiz/history/index",
+					"query": "id=da51bd8c5e43c9520e7cad684fd39728"
 				}
+				
 			]
 		}
 	}

@@ -29,7 +29,8 @@
     "pages/course/courseDetail/courseDetail",
     "pages/course/video/video",
     "pages/quiz/quizList/quizList",
-    "pages/quiz/answer/answer"
+    "pages/quiz/answer/answer",
+    "pages/quiz/history/index"
   ],
   "window": {
     "navigationBarTitleText": "Renard",
