@@ -21,22 +21,27 @@
       </block>
     </swiper-item>
   </swiper>
+
   <view class="a-section a-brand">
     <view class="h">
-      <navigator url="../brand/brand">
-        <text class="txt">正在直播</text>
+      <navigator url="../course/courseNav/courseNav">
+        <text class="txt">直播课程</text>
       </navigator>
     </view>
-  </view>
-  <view class="m-menu">
-    <navigator class="item" target="miniProgram" app-id="wxc4f812079fc9ff0d" path="">
-      <image src="../../images/live.png" background-size="cover"></image>
-      <text>肖老师</text>
-    </navigator>
-    <!-- <navigator class="item" url="/pages/category/category?id={{item.id}}" wx:for="{{channel}}" wx:key="id">
-      <image src="{{item.iconUrl}}" background-size="cover"></image>
-      <text>{{item.name}}</text>
-    </navigator> -->
+    <view class="b">
+      <view class="item item-1" wx:for="{{onair}}" wx:key="id">
+        <navigator target="miniProgram" app-id="wxc4f812079fc9ff0d" path="pages/live/main?scid=sGbO4YNBhLIkJvza&playurl=http://alcdn.f01.xiaoka.tv/live/sGbO4YNBhLIkJvza.flv&nickname=土土吃不饱_">
+          <view class="wrap">
+            <image class="img" src="{{item.picUrl}}" mode="aspectFill"></image>
+            <view class="mt">
+              <!-- <text class="brand">{{item.name}}</text> -->
+              <!-- <text class="unit">讲师：</text> -->
+              <!-- <text class="price">{{item.tutor}}</text> -->
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
   </view>
 
   <!-- <view class="a-section a-coupon" wx:if="{{coupon.length > 0}}">
@@ -115,10 +120,9 @@
           <view class="wrap">
             <image class="img" src="{{item.picUrl}}" mode="aspectFill"></image>
             <view class="mt">
-              <text class="brand">{{item.name}}</text>
-              <text class="unit">讲师：</text>
-              <text class="price">{{item.tutor}}</text>
-              
+              <!-- <text class="brand">{{item.name}}</text> -->
+              <!-- <text class="unit">讲师：</text> -->
+              <!-- <text class="price">{{item.tutor}}</text> -->
             </view>
           </view>
         </navigator>

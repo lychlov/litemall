@@ -3,8 +3,8 @@ module.exports = {
 
     // 数学公式解析API
     latex:{
-        // api:'http://towxml.vvadd.com/?tex'
-        api:'http://localhost:8001?tex'
+        api:'http://towxml.vvadd.com/?tex'
+        // api:'http://localhost:8001?tex'
     },
 
     // yuml图解析APPI

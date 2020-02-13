@@ -32,7 +32,7 @@ Page({
       name: "getNewTopic",
       complete: function complete(res) {
         // console.log("getNewTopic", res)
-        _this.setData({
+        that.setData({
           topic: res.result.data
         });
       }
@@ -75,9 +75,6 @@ Page({
 
   hotList: function hotList() {
     var _this2 = this;
-    wx.cloud.init({
-      traceUser: true
-    });
     wx.cloud.callFunction({
       name: "getHotTopic",
       complete: function complete(res) {

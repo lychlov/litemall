@@ -17,7 +17,8 @@ Page({
     channel: [],
     coupon: [],
     courses: [],
-    goodsCount: 0
+    goodsCount: 0,
+    onair:[]
   },
 
   onShareAppMessage: function() {
@@ -56,6 +57,13 @@ Page({
       }
     });
     const db = wx.cloud.database();
+    db.collection('jingzhi-onair').get({
+      success: function(res) {
+        that.setData({
+          onair: res.data,
+        })
+      }
+    })
     db.collection('jingzhi-course').get({
       success: function(res) {
         // res.data 是包含以上定义的两条记录的数组
@@ -69,12 +77,6 @@ Page({
          
         })
       }
-    });
-    util.request(api.GoodsCount).then(function (res) {
-      that.setData({
-        goodsCount: res.data
-         
-      });
     });
   },
   onLoad: function(options) {

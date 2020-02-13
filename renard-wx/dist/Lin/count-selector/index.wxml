@@ -1,0 +1,9 @@
+<view class="l-class container-count">
+    <view catchtap="{{count<=min||disabled?'doNothing':'reduceTap'}}" class="symbol {{count<=min||disabled?'disabled  l-disabled-class':'abled l-symbol-class'}}">
+        <text>-</text>
+    </view>
+    <input bindblur="onBlur" class="l-count-class count" disabled="{{disabled}}" type="number" value="{{count}}"></input>
+    <view catchtap="{{count>=max||disabled?'doNothing':'addTap'}}" class="l-symbol-class symbol {{count>=max||disabled?'disabled l-disabled-class':'abled l-symbol-class'}}">
+        <text>+</text>
+    </view>
+</view>

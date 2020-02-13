@@ -1,0 +1,14 @@
+<view catchtap="onRadioChangeTap" class="l-class radio-wrapper">
+    <label class="label-{{placement}} ">
+        <view class="radio  radio-{{checked?'active':''}}" style="background:{{checked?color:''}}; height:{{size}}rpx; width:{{size}}rpx" wx:if="{{checked}}">
+            <image class="radio-{{shape==='right'?'right':'circle'}}" src="{{shape==='right'?right:circle}}"></image>
+        </view>
+        <view class="radio-unselected radio" style="background:{{disabled?'#ccc':''}};  :;height:{{size}}rpx; width:{{size}}rpx" wx:else>
+            <image class="radio-{{shape==='right'?'right':'circle'}}" src="{{shape==='right'?right:circle}}"></image>
+        </view>
+        <view class="radio-title{{disabled?'-disabled':''}} l-title-class" wx:if="{{!custom}}">{{value}}</view>
+        <view class="radio-title" wx:else>
+            <slot></slot>
+        </view>
+    </label>
+</view>

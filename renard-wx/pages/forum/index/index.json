@@ -1,4 +1,11 @@
 {
   "backgroundColor": "#f4f4f4",
-  "navigationBarTitleText": "互动学区"
+  "navigationBarTitleText": "互动学区",
+  "usingComponents": {
+    "l-tabs": "/dist/Lin/tabs/index",
+    "l-tabpanel": "/dist/Lin/tabpanel/index",
+    "l-card": "/dist/Lin/card/index",
+    "l-icon": "/dist/Lin/icon/index"
+  },
+  "enablePullDownRefresh": false
 }
