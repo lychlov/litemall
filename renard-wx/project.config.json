@@ -55,9 +55,14 @@
 					"id": -1,
 					"name": "history",
 					"pathName": "pages/quiz/history/index",
-					"query": "id=da51bd8c5e43c9520e7cad684fd39728"
+					"query": "objectId=da51bd8c5e43c9520e7cad684fd39728"
+				},
+				{
+					"id": -1,
+					"name": "analysis",
+					"pathName": "pages/quiz/analysis/index",
+					"query": "objectId=da51bd8c5e43c9520e7cad684fd39728"
 				}
-				
 			]
 		}
 	}

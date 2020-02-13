@@ -192,3 +192,8 @@ view.i-action-ico-bor>view.def {
 	margin: 10rpx 0;
 }
 
+view,text{
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  font-size: 33rpx;
+  color: #000000;
+}

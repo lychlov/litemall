@@ -5,19 +5,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    s: ['A. ', 'B. ', 'C. ', 'D. ', 'E. '],
-    questionInfo:{},
+    s: ['A', 'B', 'C', 'D', 'E'],
+    questionInfo: {},
     loading: true,
-    result:{},
-    disabled:true,
-    actionVisible:false,
-    index:0,
-    chose:[],
+    result: {},
+    disabled: true,
+    actionVisible: false,
+    index: 0,
+    chose: [],
+    myChoice:[],
+    answer:{},
     showVideo: false,
-    showHelpVideo:false
+    showHelpVideo: false
   },
 
-  onLoad (options) {
+  onLoad(options) {
     var that = this;
     wx.getSystemInfo({
       success(res) {
@@ -27,58 +29,70 @@ Page({
       }
     })
     var objectId = options.objectId
-    wx.u.getHistory(objectId).then(res => {
+    const db = wx.cloud.database()
+    db.collection('jingzhi-quiz-record').where({
+      _id: objectId
+    }).get().then(res => {
       console.log(res)
-      var right = res.result.score
-      var wrong = res.result.questionList.length - right
-      var persent = parseFloat(right/res.result.questionList.length * 100).toFixed(2)
+      var right = res.data[0].score
+      var wrong = res.data[0].result.length - right
+      var persent = parseFloat(right / res.data[0].result.length * 100).toFixed(2)
       console.log(persent)
       this.setData({
-        loading:false,
-        result:res.result,
+        loading: false,
+        result: res.data[0].result,
         right: right,
         wrong: wrong,
         persent: persent,
-        total: res.result.questionList.length
+        total: res.data[0].result.length
       })
       this.setThisData(this.data.index)
-    })   
+    })
   },
   onReady(res) {
     this.videoContext = wx.createVideoContext('myVideo')
     this.helpVideoContext = wx.createVideoContext('helpVideo')
   },
-  setThisData(i){
+  setThisData(i) {
     console.log(i)
-    const r = this.data.result.questionList
-    const answer = []
+    const r = this.data.result
+    var answer = {}
+    var myChoice ={}
     var current = "";
     var currentD = [];
     console.log(r)
-    for(var j=0;j<r[i].choseList.length;j++){
-      if(r[i].choseList[j].isChose){
-        answer.push(this.data.s[j] + r[i].choseList[j].item)
-      }
+    var choose = r[i].choose[0]
+    var rightAnswer = r[i].answer
+    myChoice = {
+      "item":r[i][choose],
+      "markdown":r[i].choseList[this.data.s.indexOf(choose)].markdown,
     }
+    answer = {
+      "item":r[i][rightAnswer],
+      "markdown":r[i].choseList[this.data.s.indexOf(rightAnswer)].markdown,
+    }
+    console.log(myChoice)
+    console.log(answer)
     this.setData({
       current: current,
       currentD: currentD,
       questionInfo: r[i],
       answer: answer,
+      myChoice:myChoice
     })
     console.log(this.data.current)
   },
-  handlePageChange({ detail }){
+  handlePageChange({ detail }) {
     const action = detail.type;
-    const r = this.data.result.questionList
-    
-    
+    const r = this.data.result
+
+
     if (action === 'next') {
-      if(this.data.index >= (r.length-1)){
+      if (this.data.index >= (r.length - 1)) {
         console.log(this.data.index)
         return;
       }
-      this.setThisData((this.data.index +1));
+      this.setThisData((this.data.index + 1));
       this.setData({
         index: (this.data.index + 1),
       })
@@ -103,12 +117,12 @@ Page({
       actionVisible: false
     })
   },
-  dump(e){
+  dump(e) {
     console.log(e)
     var index = e.currentTarget.dataset.index
     this.setThisData(index)
     this.setData({
-      index:index,
+      index: index,
       actionVisible: false
     })
   },

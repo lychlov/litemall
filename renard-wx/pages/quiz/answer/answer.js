@@ -207,18 +207,18 @@ Page({
           // res.data 是包含以上定义的两条记录的数组
           console.log("测试数据库")
           console.log(res)
-          let result = res.data
+          var result = res.data
           const selections = ["A", "B", "C", "D", "E", "F", "G"]
           for (var i = 0; i < result.length; i += 1) {
-            let choseList = []
+            var choseList = []
             if(result[i].isMarkdown=="是"){
-              let markdown = app.towxml(result[i].content,'markdown',{
+              var markdown = app.towxml(result[i].content,'markdown',{
                 theme:'light',					// 主题，默认`light`
               });
               result[i].contentMarkdown = markdown
             }
             for(var j=0;j<selections.length;j+=1){
-              let choseMarkdown=''
+              var choseMarkdown=''
               if(result[i][selections[j]]){
                 if(result[i].isMarkdown=="是"){
                   choseMarkdown = app.towxml(result[i][selections[j]],'markdown',{
@@ -513,7 +513,7 @@ Page({
       })
       if (res.result) {
         wx.reLaunch({
-          url: '../history/index?id=' + res.result
+          url: '../history/index?objectId=' + res.result
         })
       }
     })
