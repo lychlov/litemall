@@ -19,7 +19,6 @@
     "pages/brandDetail/brandDetail",
     "pages/search/search",
     "pages/category/category",
-    "pages/cart/cart",
     "pages/shopping/checkout/checkout",
     "pages/goods/goods",
     "pages/groupon/myGroupon/myGroupon",
@@ -31,7 +30,8 @@
     "pages/quiz/quizList/quizList",
     "pages/quiz/answer/answer",
     "pages/quiz/history/index",
-    "pages/quiz/analysis/index"
+    "pages/quiz/analysis/index",
+    "pages/forum/index/index"
   ],
   "window": {
     "navigationBarTitleText": "Renard",
@@ -59,7 +59,7 @@
         "text": "习题"
       },
       {
-        "pagePath": "pages/cart/cart",
+        "pagePath": "pages/forum/index/index",
         "iconPath": "images/tabbar/discuss-unselected.png",
         "selectedIconPath": "images/tabbar/discuss-selected.png",
         "text": "论坛"

@@ -41,6 +41,12 @@
 			"list": [
 				{
 					"id": -1,
+					"name": "forum",
+					"pathName": "pages/forum/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
 					"name": "题目列表",
 					"pathName": "pages/quiz/quizList/quizList",
 					"query": "quizType=课后练习"

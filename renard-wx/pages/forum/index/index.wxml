@@ -1,7 +1,7 @@
 <view class="container">
   <view class="no-login" wx:if="{{!hasLogin}}">
     <view class="c">
-      <image src="../../images/wechat_login.png" />
+      <image src="../../../images/wechat_login.png" />
       <text></text>
       <button plain="true" bindtap="goLogin">微信登录</button>
     </view>
@@ -18,18 +18,47 @@
                 <view class="weui-navbar__slider" style="width: {{sliderWidth}}px;left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px)"></view>
             </view>
             <view class="weui-tab__panel">
-                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">学员自己提出的问题</view>
+                <!-- 学员提问 -->
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                  <view class="tapView">
+                    <scroll-view scrollY bindscroll="scrolltoupper" class="scrollView" scrollTop="{{topNum}}">
+                      <view bindtap="toOneTopic" class="onrCardView" data-id="{{item.topicId}}" id="tapTest" wx:for="{{topic}}" wx:key="{{index}}">
+                        <l-card lClass="card" plaintext="true" type="primary">
+                          <view>
+                            <view class="topicUserInfo">
+                              <view>
+                                <image class="topicUserInfoImg" mode="aspectFit" src="{{item.topicUserImg}}"></image>
+                              </view>
+                              <view class="topicUserInfoNAT">
+                                <text class="topicUserInfoName">{{item.topicUser}}</text>
+                                <text class="topicUserInfoTime">{{item.topicTime}}</text>
+                              </view>
+                            </view>
+                            <view class="topicItem">{{item.topicName}}</view>
+                            <view>
+                              <view class="topicContainer">
+                                <l-icon color="#666" name="default" size="30" style="margin-right:10rpx;"></l-icon>
+                                <view class="topicContainerNum">{{item.topicCommentNum}}</view>
+                              </view>
+                            </view>
+                          </view>
+                        </l-card>
+                      </view>
+                    </scroll-view>
+                  </view>
+                </view>
+                <!-- 精选问答 -->
                 <view class="weui-tab__content" hidden="{{activeIndex != 1}}">论坛中精选出来的问题</view>
             </view>
         </view>
     </view>
-    <view class="no-cart" wx:if="{{cartGoods.length <= 0}}">
+    <!-- <view class="no-cart" wx:if="{{cartGoods.length <= 0}}">
       <view class="c">
         <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
         <text>去添加点什么吧</text>
       </view>
-    </view>
-    <view class="cart-view" wx:else>
+    </view> -->
+    <!-- <view class="cart-view" wx:else>
       <view class="list">
         <view class="group-item">
           <view class="goods">
@@ -65,6 +94,15 @@
         <view class="checkout" bindtap="deleteCart" wx:if="{{isEditCart}}">删除所选</view>
         <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">下单</view>
       </view>
+    </view> -->
+    <view>
+      <image bindtap="addTopic" class="addTopicBtn" src="/images/bianji.png"></image>
+    </view>
+    <view>
+      <image bindtap="goTop" class="toTopBtn" hidden="{{!floorStatus}}" src="/images/dingbu.png"></image>
+    </view>
+    <view>
+      <image bindtap="upBtn" class="upPage" src="/images/shuaxin.png"></image>
     </view>
   </view>
 </view>
