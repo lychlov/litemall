@@ -79,7 +79,7 @@ page {
 
 .banner {
   display: block;
-  height: 222rpx;
+  height: 300rpx;
   width: 100%;
   position: relative;
 }
@@ -89,7 +89,7 @@ page {
   top: 30rpx;
   left: 0;
   border-radius: 4rpx;
-  height: 192rpx;
+  height: 300rpx;
   width: 100%;
 }
 

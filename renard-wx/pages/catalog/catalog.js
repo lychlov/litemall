@@ -26,18 +26,18 @@ Page({
     wx.showLoading({
       title: '加载中...',
     });
-    util.request(api.CatalogList).then(function(res) {
-      that.setData({
-        categoryList: res.data.categoryList,
-        currentCategory: res.data.currentCategory,
-        currentSubCategoryList: res.data.currentSubCategory
-      });
-      wx.hideLoading();
-    });
-    util.request(api.GoodsCount).then(function(res) {
-      that.setData({
-        goodsCount: res.data
-      });
+    const db = wx.cloud.database()
+    db.collection('jingzhi-quiz-category').get({
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          allList:res.data,
+          categoryList:res.data,
+          currentCategory: res.data[0],
+          currentSubCategoryList: res.data[0].subcategoryList
+        })
+        wx.hideLoading();
+      }
     });
 
   },
@@ -68,10 +68,15 @@ Page({
   switchCate: function(event) {
     var that = this;
     var currentTarget = event.currentTarget;
+    const index = currentTarget.dataset.index
     if (this.data.currentCategory.id == event.currentTarget.dataset.id) {
       return false;
     }
-
-    this.getCurrentCategory(event.currentTarget.dataset.id);
+    console.log(event.currentTarget.dataset)
+    that.setData({
+      currentCategory: that.data.categoryList[index],
+      currentSubCategoryList: that.data.categoryList[index].subcategoryList
+    })
+    // this.getCurrentCategory(event.currentTarget.dataset.id);
   }
 })
