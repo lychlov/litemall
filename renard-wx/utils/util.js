@@ -86,6 +86,7 @@ function showErrorToast(msg) {
 }
 
 function addHistory (params){
+  console.log('调用addHistory')
   return new Promise((resolve, reject) => {
     const db = wx.cloud.database()
     console.log(params)
@@ -95,19 +96,19 @@ function addHistory (params){
       quizName:quizName,
       openID:openID
     }).get().then(res=>{
-      console.log(res)
+      console.log('查询到历史记录',res)
       if(res.data.length>0){
         db.collection('jingzhi-quiz-record').doc(res.data[0]._id).set({
           data:params
         }).then(res1=>{
-          console.log(res1)
-          resolve({ 'result': res1._id })
+          console.log('更新历史记录',res1)
+          resolve({ 'result': res.data[0]._id })
         })
       }else{
         db.collection('jingzhi-quiz-record').add({
           data: params,
         }).then(res2=>{
-          console.log(res2)
+          console.log('创建历史记录',res2)
           resolve({ 'result': res2._id})
         })
       }

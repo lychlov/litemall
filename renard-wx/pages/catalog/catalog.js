@@ -6,7 +6,6 @@ Page({
     categoryList: [],
     currentCategory: {},
     currentSubCategoryList: {},
-    allList: {},
     scrollLeft: 0,
     scrollTop: 0,
     goodsCount: 0,
@@ -15,88 +14,44 @@ Page({
   onLoad: function(options) {
     this.getCatalog();
   },
-
   onPullDownRefresh() {
     wx.showNavigationBarLoading() //在标题栏中显示加载
     this.getCatalog();
     wx.hideNavigationBarLoading() //完成停止加载
     wx.stopPullDownRefresh() //停止下拉刷新
   },
-
   getCatalog: function() {
     //CatalogList
     let that = this;
     wx.showLoading({
       title: '加载中...',
     });
-    util.request(api.CatalogAll).then(function(res) {
+    util.request(api.CatalogList).then(function(res) {
       that.setData({
-        allList: res.data.allList,
-        // categoryList: res.data.categoryList,
+        categoryList: res.data.categoryList,
         currentCategory: res.data.currentCategory,
         currentSubCategoryList: res.data.currentSubCategory
       });
+      wx.hideLoading();
     });
-    that.setData({
-      categoryList: [{
-        "id":1000,
-        "name":"常规练习",
-        "subLevel":[{
-          "id":1001,
-          "name":"课后练习",
-          "iconPath":"../../images/after-class.png",
-        },{
-          "id":1002,
-          "name":"阶段诊断",
-          "iconPath":"../../images/diagnosis.png",
-        },{
-          "id":1003,
-          "name":"历年真题",
-          "iconPath":"../../images/real-quiz.png",
-        },{
-          "id":1004,
-          "name":"模拟练兵",
-          "iconPath":"../../images/simulation.png",
-        },],
-      },{
-        "id":3000,
-        "name":"专项精炼",
-        "subLevel":[{
-          "id":3001,
-          "name":"补短专练",
-          "iconPath":"../../images/after-class.png",
-        },{
-          "id":3002,
-          "name":"培优专练",
-          "iconPath":"../../images/diagnosis.png",
-        },{
-          "id":3003,
-          "name":"一对一",
-          "iconPath":"../../images/real-quiz.png",
-        }],
-      },{
-        "id":2000,
-        "name":"刷题练习",
-        "subLevel":[{
-          "id":2001,
-          "name":"随机题库",
-          "iconPath":"../../images/shuffle.png",
-        }],
-      },]
+    util.request(api.GoodsCount).then(function(res) {
+      that.setData({
+        goodsCount: res.data
+      });
     });
 
-    wx.hideLoading();
   },
-  getCurrentCategory: function(item) {
+  getCurrentCategory: function(id) {
     let that = this;
-    for (var key in that.data.allList) {
-      if (key == item.id) {
+    util.request(api.CatalogCurrent, {
+        id: id
+      })
+      .then(function(res) {
         that.setData({
-          currentCategory: item,
-          currentSubCategoryList: that.data.allList[key]
+          currentCategory: res.data.currentCategory,
+          currentSubCategoryList: res.data.currentSubCategory
         });
-      }
-    }
+      });
   },
   onReady: function() {
     // 页面渲染完成
@@ -110,18 +65,13 @@ Page({
   onUnload: function() {
     // 页面关闭
   },
-
   switchCate: function(event) {
+    var that = this;
+    var currentTarget = event.currentTarget;
     if (this.data.currentCategory.id == event.currentTarget.dataset.id) {
       return false;
     }
 
     this.getCurrentCategory(event.currentTarget.dataset.id);
-  },
-  levelClick: function(e) {
-    console.log(e.currentTarget.dataset.name)
-    wx.navigateTo({
-      url: "/pages/quiz/quizList/quizList?quizType=" + e.currentTarget.dataset.name
-    })
   }
 })

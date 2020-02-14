@@ -8,11 +8,12 @@ Page({
     loading:true,
     total:0,
     score:0,
-    average:0
+    average:0,
+
   },
 
   onLoad (options) {
-    var objectId = options.id
+    var objectId = options.objectId
     const db = wx.cloud.database()
     db.collection('jingzhi-quiz-record').where({
       _id: objectId
@@ -51,7 +52,7 @@ Page({
   },
   analysis(){
     wx.navigateTo({
-      url: '/pages/analysis/index?objectId='+ this.data.objectId,
+      url: '/pages/quiz/analysis/index?objectId='+ this.data.objectId,
     })
   }
 })

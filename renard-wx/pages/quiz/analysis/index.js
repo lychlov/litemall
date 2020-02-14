@@ -29,6 +29,7 @@ Page({
       }
     })
     var objectId = options.objectId
+    console.log('objid',objectId)
     const db = wx.cloud.database()
     db.collection('jingzhi-quiz-record').where({
       _id: objectId
@@ -61,7 +62,7 @@ Page({
     var current = "";
     var currentD = [];
     console.log(r)
-    var choose = r[i].choose[0]
+    var choose = r[i].choose? r[i].choose[0]:''
     var rightAnswer = r[i].answer
     myChoice = {
       "item":r[i][choose],

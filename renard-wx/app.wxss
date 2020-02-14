@@ -16,7 +16,7 @@ view, image, text, navigator {
 view, text {
   font-family: PingFangSC-Light, helvetica, 'Heiti SC';
   font-size: 29rpx;
-  color: #a78845;
+  color: #000000;
 }
 
 .wxParse-img {

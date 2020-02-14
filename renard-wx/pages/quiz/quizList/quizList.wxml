@@ -7,6 +7,6 @@
     <view class='course-teacher'>课程：{{item.course}} (用时{{item.duration}}分钟)</view>
   </view>
 </view>
-<view >
+<!-- <view >
     <towxml nodes="{{article}}" />
-</view>
+</view> -->
