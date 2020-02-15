@@ -28,6 +28,7 @@
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"cloudfunctionRoot": "functions/",
+	"miniprogramRoot":"miniprogram",
 	"condition": {
 		"search": {
 			"current": -1,
