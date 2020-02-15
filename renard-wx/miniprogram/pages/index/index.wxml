@@ -55,10 +55,10 @@
   </view>
 
 
-  <view class="a-section a-topic" wx:if="topics.length > 0" hidden="{{topics.length <= 0}}">
+  <view class="a-section a-topic" wx:if="courses.length > 0" hidden="{{courses.length <= 0}}">
     <view class="h">
       <view>
-        <navigator url="/pages/topic/topic">
+        <navigator url="">
           <text class="txt">精选课程</text>
         </navigator>
       </view>

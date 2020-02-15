@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "课程学习",
+  "navigationBarTitleText": "经致课堂",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "van-notice-bar": "/components/notice-bar/index"

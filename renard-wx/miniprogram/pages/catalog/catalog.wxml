@@ -11,7 +11,7 @@
     </scroll-view>
     <scroll-view class="cate" scroll-y="true">
       <navigator url="url" class="banner">
-        <image class="image" src="/images/cate-cover.png"></image>
+        <image class="image" src="cloud://snowtogether-54ny0.736e-snowtogether-54ny0-1254432105/jingzhi-material/cate-cover.png"></image>
         <view class="txt">{{currentCategory.frontName}}</view>
       </navigator>
       <view class="hd">
