@@ -1,4 +1,0 @@
-<view class="l-class radio-group-{{placement}}">
-    <slot></slot>
-</view>
-<l-error-tip errorText="{{errorText}}" lErrorText="l-error-text" wx:if="{{errorText}}"></l-error-tip>
