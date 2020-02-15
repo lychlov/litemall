@@ -28,6 +28,7 @@ function login() {
   return new Promise(function(resolve, reject) {
     wx.login({
       success: function(res) {
+        console.log("login  code",res.code)
         if (res.code) {
           resolve(res);
         } else {
@@ -44,6 +45,13 @@ function login() {
 /**
  * 调用微信登录
  */
+function loginByWeixin2(userInfo){
+  return new Promise(function(resolve,reject){
+    return login().then((res) => {
+      
+    })
+  });
+}
 function loginByWeixin(userInfo) {
 
   return new Promise(function(resolve, reject) {

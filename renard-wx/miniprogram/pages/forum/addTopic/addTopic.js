@@ -93,7 +93,7 @@ Page({
             topicId: wx.getStorageSync("topicId")
         };
         if (data.topicName) {
-            db.collection("topic").add({
+            db.collection("jingzhi-topic").add({
                 data: data,
                 success: function success(res) {
                     wx.showToast({

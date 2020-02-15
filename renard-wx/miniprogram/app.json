@@ -21,6 +21,7 @@
     "pages/quiz/history/index",
     "pages/quiz/analysis/index",
     "pages/forum/index/index",
+    "pages/forum/oneTopic/oneTopic",
     "pages/quiz/checkin/list/index",
     "pages/quiz/checkin/assessment/index"
     ],

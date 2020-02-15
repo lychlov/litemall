@@ -1,11 +1,10 @@
 const cloud = require('wx-server-sdk')
 cloud.init({
   traceUser: true,
-  env: 'ourtalk'
 })
 const md5 = require('md5-node')
 const db = cloud.database()
-const usersTable = db.collection("users")
+const usersTable = db.collection("jingzhi-user")
 const _ = db.command
 
 // 云函数入口函数
