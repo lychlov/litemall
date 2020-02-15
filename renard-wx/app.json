@@ -20,8 +20,10 @@
     "pages/quiz/answer/answer",
     "pages/quiz/history/index",
     "pages/quiz/analysis/index",
-    "pages/forum/index/index"
-  ],
+    "pages/forum/index/index",
+    "pages/quiz/checkin/list/index",
+    "pages/quiz/checkin/assessment/index"
+    ],
   "window": {
     "navigationBarTitleText": "Renard",
     "enablePullDownRefresh": true,

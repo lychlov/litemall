@@ -33,6 +33,13 @@ App({
   },
   globalData: {
     hasLogin: false,
+    score_coeff: 1.0,
+    userInfo: null,
+    currentWordList: [
+    ],
+    currentSentenceList: [
+    ],
+    wordInfo: {}, // 单词数据
     userInfo: {}
   }
 })

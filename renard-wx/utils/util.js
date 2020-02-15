@@ -14,6 +14,14 @@ function formatTime(date) {
   return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
+function getToday(){
+  var d = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  return [year, month, day].map(formatNumber).join('')
+}
+
 function formatNumber(n) {
   n = n.toString();
   return n[1] ? n : '0' + n

@@ -53,6 +53,12 @@
 			"list": [
 				{
 					"id": -1,
+					"name": "english",
+					"pathName": "pages/quiz/checkin/list/index",
+					"query": ""
+				},
+				{
+					"id": -1,
 					"name": "current",
 					"pathName": "pages/catalog/catalog",
 					"query": ""
