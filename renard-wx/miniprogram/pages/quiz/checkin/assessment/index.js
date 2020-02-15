@@ -84,7 +84,7 @@ Page({
     if (!this.data.canPrevious) {
       wx.showToast({
         title: '已经是第一个了！',
-        icon: 'warnning',
+        image: '/images/warning.png',
         duration: 2000
       })
       console.warn("not can previous ")
@@ -100,7 +100,7 @@ Page({
       console.warn("not can next ")
       wx.showToast({
         title: '已经是最后一个了！',
-        icon: 'warning',
+        image: '/images/warning.png',
         duration: 2000
       })
       return
