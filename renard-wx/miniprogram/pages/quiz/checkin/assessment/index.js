@@ -39,13 +39,14 @@ Page({
 
     assessmentItem: {},
 
+    listened: [],
     index: 0,
     canPrevious: true,
     canNext: true,
 
     // hasResult: false,
     hasResult: true,
-    wordList:[],
+    wordList: [],
     buttonType: 'normal',
 
     // 整体结果
@@ -70,7 +71,6 @@ Page({
     wordCaton: [], // 停顿过长
     wordMiss: [], // 遗漏词汇
     wordExtra: [], // 多读词汇
-
 
     voicePath: "",
 
@@ -114,7 +114,14 @@ Page({
 
   playVoice: function (e) {
     console.log("playVoice", e)
+    var that = this
     let word = e.currentTarget.dataset.word
+    if (that.data.listened.indexOf(word) == -1) {
+      that.data.listened.push(word)
+    }
+    console.log(that.data.listened)
+
+    console.log(this.data.wordList.length)
     console.log(e.currentTarget.dataset)
     if (!word) {
       console.warn("no translate voice path")
@@ -124,12 +131,13 @@ Page({
     let flag = this.data.mode == 'sentence' ? 1 : 0
 
     // let play_path = `${requestUrl}&appid=${requestAppId}&mode=get_voice&flag=${flag}&voice_id=${voiceId}`
-    let play_path="https://fanyi.baidu.com/gettts?lan=en&spd=3&source=web&text="+word
+    let play_path = "https://fanyi.baidu.com/gettts?lan=en&spd=3&source=web&text=" + word
     console.log("play_path", play_path)
 
     wx.onBackgroundAudioStop(res => {
       console.log("play voice end", res)
       this.playAnimationEnd()
+      
     })
 
     this.playAnimationStart()
@@ -141,6 +149,9 @@ Page({
       success: (res) => {
         console.log("play success")
         this.playAnimationStart()
+        if (that.data.listened.length == that.data.wordList.length) {
+          that.addRecord()
+        }
       },
       fail: (res) => {
         // fail
@@ -153,8 +164,26 @@ Page({
     })
 
   },
-
-
+  addRecord: function () {
+    var that = this
+    const db = wx.cloud.database()
+    db.collection('jingzhi-checkin-record')
+      .add({
+        data: {
+          checkinTime: new Date(),
+          index: that.data.checkinIndex,
+          date: that.data.dateStr,
+          isCheckin: 1
+        }
+      }).then(res => {
+        console.log(res)
+        wx.showToast({
+          icon: 'success',
+          title: '完成打卡'
+        });
+      })
+      .catch(console.error)
+  },
   /**
      * 开始播放
      */
@@ -363,24 +392,30 @@ Page({
     // mode=sentence&index=10
     console.log("assessment", option)
     var that = this
+    var checkinIndex = parseInt(option.checkinIndex)
     const db = wx.cloud.database()
-    db.collection('jingzhi-word-checkin').orderBy('index','desc')
-    .limit(1).get({
-      success: function (res) {
-        // res.data 是包含以上定义的两条记录的数组
-        console.log('载入打卡单词',res)
-        if (res.data.length>0) {
-          that.setData({
-            wordList: res.data[0].word_list,
+    db.collection('jingzhi-word-checkin')
+      .where({
+        index: checkinIndex
+      })
+      .orderBy('index', 'desc')
+      .limit(1).get({
+        success: function (res) {
+          // res.data 是包含以上定义的两条记录的数组
+          console.log('载入打卡单词', res)
+          if (res.data.length > 0) {
+            that.setData({
+              wordList: res.data[0].word_list,
+              dateStr: res.data[0].date,
+              checkinIndex: checkinIndex
+            });
+            that.initPage(option)
 
-          });
-          that.initPage(option)
-
-        } else {
-          console.log('载入')
+          } else {
+            console.log('载入')
+          }
         }
-      }
-    })
+      })
   },
 
   initPage: function (option) {
@@ -390,7 +425,7 @@ Page({
     let modeDetail = evalMode[modeName] || {}
     let listKey = modeName == 'word' ? 'currentWordList' : 'currentSentenceList'
     let assessmentList = this.data.wordList
-    console.log("assessmentList",assessmentList)
+    console.log("assessmentList", assessmentList)
     let assessmentItem = assessmentList[index] || {}
     if (modeName == 'word') {
       app.globalData.currentSentenceList = assessmentItem.sent_ids || []
@@ -415,9 +450,9 @@ Page({
     })
   },
 
-  onHide: function() {
+  onHide: function () {
     const innerAudioContext = wx.createInnerAudioContext()
 
     innerAudioContext.stop()
-},
+  },
 })

@@ -47,12 +47,12 @@
     <view class="speaking-wrap" >
       <!-- <image src="/images/speaking.png" class="speaking-img"></image> -->
       <image src="/images/speaker.png" class="play-img sentence-play-img speaking-img"  data-word="{{assessmentItem.text}}" bindtap="playVoice"></image>
-      
     </view>
     <view>
       <view class="cell-next cell-switch" bindtap="next"></view>
     </view>
   </view>
+  
 
   <view class="sentence-list">
     <navigator class="sentence-item" wx:for="{{ assessmentItem.sent_ids }}" wx:key="text" >

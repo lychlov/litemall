@@ -12,7 +12,7 @@ height: 100%;
 position: relative;
 box-sizing: border-box;
 font-size: 32rpx;
-background: rgb(234, 255, 253);
+background: rgb(255, 255, 255);
 
 }
 
@@ -166,7 +166,7 @@ margin-top: -4px;
 .speaking-wrap {
     width: 190rpx;
     height: 190rpx;
-    background: rgb(209, 255, 209);
+    background: rgb(234, 238, 234);
     border-radius: 50%;
     opacity: 0.8;
     display: flex;
@@ -176,7 +176,7 @@ margin-top: -4px;
 
 .speaking-img{
     width: 190rpx;
-    height: 190rpx;
+    height: 150rpx;
 }
 
 .cell-switch {
@@ -184,7 +184,7 @@ margin-top: -4px;
     height: 86rpx;
     box-sizing:border-box;
     opacity: 0.8;
-    background: rgb(209, 255, 209);
+    background: rgb(234, 238, 234);
     box-shadow: 0 0 18px 0 rgba(8,70,66,0.06);
     border-radius: 50%;
 }
