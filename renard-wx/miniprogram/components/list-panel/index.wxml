@@ -5,8 +5,8 @@
 
     <view class="score">
       <slot name="prefix" wx:if="{{score != 0}}"></slot>
-      <text class=" {{scoreClass}}" wx:if="{{score != 0}}">{{score}}</text>
-      <text class="" wx:else>未测评</text>
+      <text class='done' wx:if="{{score != 0}}">已完成</text>
+      <text class="go" wx:else>去打卡</text>
     </view>
 
     <view class="cell-next "></view>

@@ -14,6 +14,7 @@
     "pages/quiz/analysis/index",
     "pages/forum/index/index",
     "pages/forum/oneTopic/oneTopic",
+    "pages/forum/addTopic/addTopic",
     "pages/quiz/checkin/list/index",
     "pages/quiz/checkin/assessment/index"
     ],

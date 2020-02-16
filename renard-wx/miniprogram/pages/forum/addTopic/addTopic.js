@@ -88,8 +88,9 @@ Page({
             topicUser: wx.getStorageSync("userName"),
             topicUserImg: wx.getStorageSync("userImg"),
             topicCommentNum: 0,
-            topicTime: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
+            topicTime: d,
             comment: [],
+            isPrivate: 1,
             topicId: wx.getStorageSync("topicId")
         };
         if (data.topicName) {
@@ -125,7 +126,7 @@ Page({
         var firstW = "topic";
         var topicId = firstW + Date.now() + (Math.random() * 1e5).toFixed(0);
         // console.log(topicId)
-                wx.setStorageSync("topicId", topicId);
+        wx.setStorageSync("topicId", topicId);
         return topicId;
     }
 });

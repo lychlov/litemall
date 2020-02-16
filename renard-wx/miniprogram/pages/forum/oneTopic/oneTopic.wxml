@@ -7,7 +7,7 @@
                         <image class="topicUserImg" mode="aspectFit" src="{{data.topicUserImg}}"></image>
                         <view class="topictUserNAT">
                             <text class="topicUserName">{{data.topicUser}}</text>
-                            <text class="topicTime">{{data.topicTime}}</text>
+                            <text class="topicTime">{{data.topicTimeParse}}</text>
                         </view>
                     </view>
                     <view class="topicItem">{{data.topicName}}</view>

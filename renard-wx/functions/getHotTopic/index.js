@@ -8,7 +8,10 @@ const _ = db.command
 exports.main = async (event, context) => {
   try {
     return await db.collection('jingzhi-topic')
-      .orderBy('topicCommentNum', 'desc')
+      .where({
+        isPrivate:0
+      })
+      .orderBy('topicTime', 'desc')
       .get({
         success: function (res) {
           return res

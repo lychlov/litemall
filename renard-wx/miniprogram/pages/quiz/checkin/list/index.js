@@ -234,19 +234,25 @@ Page({
     this.showAssessmentCache()
   },
 
+  getCheckinList:function(){
+    var that = this
+    wx.cloud.callFunction({
+      name: "getCheckinList",
+      complete: function complete(res) {
+        console.log("getCheckinList", res)
+        that.setData({
+          checkinList: res.result.list
+        });
+      }
+      
+    });
+  
+  },
 
   onLoad: function () {
 
-    this.setData({
-      grade: {
-        text: '一年级',
-        grade: 1,
-      },
-      unit: 1,
-    })
-
-    this.getWords()
-
+    this.getCheckinList()
+    // this.addARecord()
     let modeName = 'word'
     let modeDetail = evalMode[modeName] || {}
 
@@ -255,10 +261,12 @@ Page({
       modeDetail: modeDetail,
     })
 
-    wx.setNavigationBarTitle({
-      title: `${modeDetail.desc}列表`
-    })
+    // wx.setNavigationBarTitle({
+    //   title: `${modeDetail.desc}列表`
+    // })
 
   },
+
+  
 
 })

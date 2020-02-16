@@ -3,15 +3,15 @@
 <view class="container">
 
   <view class="title">
-    <view class="grade-text">{{grade.text}}</view>
-    <view class="unit-text">Unit {{unit}}</view>
+    <view class="grade-text">每日任务</view>
+    <view class="unit-text">单词打卡</view>
   </view>
 
 
   <view class="item-list">
 
-    <navigator class="panel" wx:for="{{ itemList }}" wx:key="index" url="/pages/quiz/checkin/assessment/index?mode=word&&index={{index}}" >
-      <list-panel content="{{item.content}}" score="{{item.score}}">
+    <navigator class="panel" wx:for="{{ checkinList }}" wx:key="index" url="/pages/quiz/checkin/assessment/index?mode=word&&index={{item.index}}" >
+      <list-panel content="{{item.date}}" score="{{item.record.length>0?'90':''}}">
       </list-panel>
     </navigator>
 

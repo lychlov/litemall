@@ -7,7 +7,12 @@ const _ = db.command
 // 云函数入口函数
 exports.main = async (event, context) => {
   try {
+    let { OPENID, APPID, UNIONID } = cloud.getWXContext()
     return await db.collection('jingzhi-topic')
+      .where({
+        isPrivate:1,
+        _openid:OPENID
+      })
       .orderBy('topicTime', 'desc')
       .get({
         success: function (res) {

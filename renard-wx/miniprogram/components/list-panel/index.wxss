@@ -30,9 +30,15 @@
 .score-excellent {
   color: #FF6800;
 }
+.go {
+  color: rgb(77, 230, 115);
+}
 
 .score-good {
-  color: #4C6AFC;
+  color: rgb(117, 117, 117);
+}
+.done {
+  color: rgb(117, 117, 117);
 }
 
 

@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "单词打卡",
   "usingComponents": {
     "list-panel": "/components/list-panel/index"
   }

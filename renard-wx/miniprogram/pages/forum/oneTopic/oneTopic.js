@@ -37,7 +37,7 @@ Page({
         //   idNum = Number(id)
         // else
         //   idNum = this.data.topicId;
-                id = this.data.topicId;
+        id = this.data.topicId;
         db.collection("jingzhi-topic").where({
             // topicid: _.eq(idNum)
             topicId: id
@@ -45,6 +45,7 @@ Page({
             success: function success(res) {
                 // console.log(res)
                 var D = res.data;
+                D[0].topicTimeParse = util.formatTime(D[0].topicTime)
                 _this.setData({
                     data: D[0]
                 });

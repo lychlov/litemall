@@ -37,6 +37,15 @@ Page({
         });
       }
     });
+    wx.cloud.callFunction({
+      name: "getHotTopic",
+      complete: function complete(res) {
+        // console.log("getNewTopic", res)
+        that.setData({
+          hotTopic: res.result.data
+        });
+      }
+    });
 
   },
 
@@ -80,7 +89,7 @@ Page({
       complete: function complete(res) {
         // console.log("getHotTopic",res)
         _this2.setData({
-          topic: res.result.data
+          hotTopic: res.result.data
         });
         return res;
       }
@@ -88,9 +97,6 @@ Page({
   },
   newList: function newList() {
     var _this3 = this;
-    wx.cloud.init({
-      traceUser: true
-    });
     wx.cloud.callFunction({
       name: "getNewTopic",
       complete: function complete(res) {
@@ -146,13 +152,9 @@ Page({
   upBtn: function upBtn(res) {
     var key = res.detail.currentIndex;
     var that = this;
-    if (key == 1) {
-      that.hotList();
-      that.goTop();
-    } else {
+    that.hotList();
     that.newList();
     that.goTop();
-    }
   }
   
 });
