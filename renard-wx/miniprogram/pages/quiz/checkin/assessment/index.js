@@ -35,6 +35,7 @@ const overallIndex = [{
 Page({
   data: {
     mode: 'word',
+    landscapeVisible:false,
     modeDetail: evalMode.word,
 
     assessmentItem: {},
@@ -177,10 +178,9 @@ Page({
         }
       }).then(res => {
         console.log(res)
-        wx.showToast({
-          icon: 'success',
-          title: '完成打卡'
-        });
+        this.setData({
+          landscapeVisible: true,
+        })
       })
       .catch(console.error)
   },
@@ -450,6 +450,18 @@ Page({
     })
   },
 
+  onPopupTap: function(){
+    console.log('压屏窗点击')
+  },
+
+  onClose1() {
+    this.setData({
+      landscapeVisible: false,
+    })
+    wx.reLaunch({
+      url: '/pages/catalog/catalog'
+    })
+},
   onHide: function () {
     const innerAudioContext = wx.createInnerAudioContext()
 

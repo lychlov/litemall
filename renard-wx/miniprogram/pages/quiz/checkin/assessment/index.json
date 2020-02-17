@@ -2,5 +2,7 @@
   "navigationBarTitleText": "单词打卡",
   "component": true,
   "usingComponents": {
+    "wux-button": "/wux/button/index",
+    "wux-landscape": "/wux/landscape/index"
   }
 }

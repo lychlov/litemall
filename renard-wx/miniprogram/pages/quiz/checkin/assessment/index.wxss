@@ -6,7 +6,14 @@ page {
     width: 100%;
     background: rgb(234, 255, 253);
 }
-  
+
+.popup__button {
+    display: block;
+    flex: 1;
+    color: #33cd5f;
+    position: relative;
+}
+
 .container {
 height: 100%;
 position: relative;
