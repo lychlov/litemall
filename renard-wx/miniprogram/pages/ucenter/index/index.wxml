@@ -3,7 +3,7 @@
     <view class="profile-info" bindtap="goLogin">
       <image class="avatar" src="{{userInfo.avatarUrl}}" />
       <view class="my-info-name">{{userInfo.nickName}}
-        <text></text>
+        <text></text><wux-tag color="gold">gold</wux-tag>
       </view>
     </view>
     <view class="my-info-order">

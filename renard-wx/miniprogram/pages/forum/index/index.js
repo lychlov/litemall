@@ -31,7 +31,7 @@ Page({
     wx.cloud.callFunction({
       name: "getNewTopic",
       complete: function complete(res) {
-        // console.log("getNewTopic", res)
+        console.log("getNewTopic", res)
         that.setData({
           topic: res.result.data
         });

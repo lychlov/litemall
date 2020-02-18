@@ -27,7 +27,8 @@ Page({
       title: '加载中...',
     });
     const db = wx.cloud.database()
-    db.collection('jingzhi-quiz-category').get({
+    db.collection('jingzhi-quiz-category').orderBy('sortOrder','asc')
+    .get({
       success: function(res) {
         console.log(res)
         that.setData({

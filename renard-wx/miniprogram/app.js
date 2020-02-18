@@ -8,7 +8,7 @@ App({
   towxml:require('/towxml/index'),
   onLaunch: function() {
     wx.cloud.init({
-      env: 'snowtogether-54ny0'
+      env: 'release-sgy10'
     });
     const updateManager = wx.getUpdateManager();
     wx.getUpdateManager().onUpdateReady(function() {
