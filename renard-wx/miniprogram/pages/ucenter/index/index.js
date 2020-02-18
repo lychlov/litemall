@@ -43,7 +43,9 @@ Page({
       });
     }
   },
+  
   goOrder() {
+    console.log(app.globalData.hasLogin)
     if (app.globalData.hasLogin) {
       wx.navigateTo({
         url: "/pages/index/index"
